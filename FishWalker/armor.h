@@ -13,17 +13,17 @@ class Armor {
   int getArmorDef() const;
   int getArmorType() const;
 
+  // сеттеры
+  void setArmorName(const std::string& newArmorName);
+  void setArmorDef(int newArmorDef);
+  void setArmorType(int newArmorType);
+
   // деструктор
   virtual ~Armor();
 
  protected:
   std::string armorName;
   int armorDef, armorType;
-
-  // сеттеры
-  void setArmorName(const std::string& newArmorName);
-  void setArmorDef(int newArmorDef);
-  void setArmorType(int newArmorType);
 };
 
 #endif  // ARMOR_H

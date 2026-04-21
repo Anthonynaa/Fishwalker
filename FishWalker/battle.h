@@ -8,30 +8,25 @@
 
 class Battle {
  public:
-  // конструктор
   Battle(Hero* hero, std::vector<Monster*> enemies);
+  ~Battle();
 
-  // функции
   void startBattle();
   bool isBattleOver() const;
   int countAliveEnemies() const;
-
   Hero& getHero();
   Monster& getMonster();
   void heroAttack();
+  void heroAttackWithMultiplier(int multiplier);
   bool isHeroAlive() const;
-
-  // деструктор
-  ~Battle();
+  Monster* getMonsterPtr() const;
 
  private:
   Hero* hero;
   std::vector<Monster*> enemies;
-
-  // функции
-  void displayAliveEnemies();
   void monstersTurn();
   void heroTurn();
+  void displayAliveEnemies();
 };
 
-#endif  // BATTLE_H
+#endif

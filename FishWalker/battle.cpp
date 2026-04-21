@@ -2,59 +2,54 @@
 
 #include <iostream>
 
-// конструктор
 Battle::Battle(Hero* hero, std::vector<Monster*> enemies)
     : hero(hero), enemies(enemies) {}
 
-// функции
-void Battle::startBattle() {
-  while (!isBattleOver()) {
-    heroTurn();
-    if (!isBattleOver()) {
-      monstersTurn();
-    }
-    std::cout << "\n";
-  }
-
-  if (isBattleOver()) {
-    if (hero->isAlive()) {
-      std::cout << "Победа!\n";
-    } else {
-      std::cout << "Поражение\n";
-    }
-  }
-}
+Battle::~Battle() {}
 
 bool Battle::isBattleOver() const {
-  if (!hero->isAlive()) {
-    return true;
-  }
-  for (size_t i = 0; i < enemies.size(); ++i) {
-    if (enemies[i]->isAlive()) {
-      return false;
-    }
-  }
+  if (!hero->isAlive()) return true;
+  for (auto* m : enemies)
+    if (m->isAlive()) return false;
   return true;
 }
+
 int Battle::countAliveEnemies() const {
   int cnt = 0;
-  for (size_t i = 0; i < enemies.size(); ++i) {
-    if (enemies[i]->isAlive()) {
-      cnt++;
-    }
-  }
+  for (auto* m : enemies)
+    if (m->isAlive()) cnt++;
   return cnt;
 }
 
-void Battle::displayAliveEnemies() {
-  int number = 1;
-  for (size_t i = 0; i < enemies.size(); ++i) {
-    if (enemies[i]->isAlive()) {
-      std::cout << number << ". " << enemies[i]->getName() << "("
-                << enemies[i]->getHp() << "HP)\n";
-      ++number;
+Hero& Battle::getHero() { return *hero; }
+Monster& Battle::getMonster() { return *enemies[0]; }
+
+void Battle::heroAttack() {
+  if (!isBattleOver() && hero->isAlive()) {
+    hero->resetTempDamageMultiplier();
+    hero->attack(*enemies[0]);
+    if (!enemies[0]->isAlive()) return;
+    if (hero->isAlive()) {
+      enemies[0]->attack(*hero);
     }
   }
+}
+
+void Battle::heroAttackWithMultiplier(int multiplier) {
+  if (!isBattleOver() && hero->isAlive()) {
+    hero->setTempDamageMultiplier(multiplier);
+    hero->attack(*enemies[0]);
+    hero->resetTempDamageMultiplier();
+    if (!enemies[0]->isAlive()) return;  // монстр мёртв – не атакуем в ответ
+    if (hero->isAlive()) {
+      enemies[0]->attack(*hero);
+    }
+  }
+}
+
+bool Battle::isHeroAlive() const { return hero->isAlive(); }
+Monster* Battle::getMonsterPtr() const {
+  return enemies.empty() ? nullptr : enemies[0];
 }
 
 void Battle::monstersTurn() {
@@ -65,73 +60,7 @@ void Battle::monstersTurn() {
     }
   }
 }
-
-void Battle::heroTurn() {
-  int actions = countAliveEnemies();
-  for (int i = 0; i < actions && !isBattleOver(); ++i) {
-    std::cout << hero->getName() << ": " << hero->getHp() << " HP\n";
-    int choice;
-    std::cout << "Живые враги:\n";
-    displayAliveEnemies();
-    while (true) {
-      std::cout << "Введите номер цели: ";
-      if (std::cin >> choice) {
-        int aliveCount = countAliveEnemies();
-        if (choice >= 1 && choice <= aliveCount) {
-          Monster* target = nullptr;
-          int live = 0;
-          for (size_t i = 0; i < enemies.size(); ++i) {
-            if (enemies[i]->isAlive()) {
-              live++;
-              if (live == choice) {
-                target = enemies[i];
-              }
-            }
-          }
-          if (target != nullptr) {
-            hero->attack(*target);
-            if (!hero->isAlive()) break;
-          }
-          break;
-        } else {
-          std::cout << "Нет врага с таким номером\n";
-        }
-      } else {
-        std::cin.clear();
-        std::cin.ignore(10000, '\n');
-        std::cout << "Введите число\n";
-      }
-    }
-  }
-}
-
-Hero& Battle::getHero() { return *hero; }
-
-Monster& Battle::getMonster() {
-  // Предполагаем, что бой с одним монстром (первый в векторе)
-  return *enemies[0];
-}
-
-void Battle::heroAttack() {
-  if (isBattleOver()) return;
-  // Находим первого живого монстра (должен быть один)
-  Monster* target = nullptr;
-  for (auto* m : enemies) {
-    if (m->isAlive()) {
-      target = m;
-      break;
-    }
-  }
-  if (target) {
-    hero->attack(*target);           // герой атакует
-    if (!target->isAlive()) return;  // монстр умер – бой закончится
-    if (hero->isAlive()) {
-      target->attack(*hero);  // монстр отвечает
-    }
-  }
-}
-
-bool Battle::isHeroAlive() const { return hero->isAlive(); }
-
-// деструктор
-Battle::~Battle() {}
+// Пустые методы для совместимости
+void Battle::displayAliveEnemies() {}
+void Battle::heroTurn() {}
+void Battle::startBattle() {}

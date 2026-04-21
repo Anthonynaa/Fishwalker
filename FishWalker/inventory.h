@@ -17,6 +17,8 @@ class Inventory {
   bool useItem(int index, Hero& hero);
   void listItems() const;
 
+  const std::vector<Item>& getItems() const { return items; }
+
  private:
   std::vector<Item> items;
 };

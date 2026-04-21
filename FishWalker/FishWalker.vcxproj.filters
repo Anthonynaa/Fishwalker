@@ -55,6 +55,12 @@
     <Filter Include="Исходные файлы\MonsterFactory">
       <UniqueIdentifier>{b53078d8-9ca8-4ec2-9856-e544fa05d6cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Entity\Character\Infected Monster">
+      <UniqueIdentifier>{69514870-e337-48e2-b851-6d163463fdf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Minigame">
+      <UniqueIdentifier>{808e0faa-756f-4d1d-b5fd-eab59601821a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,14 +99,17 @@
     <ClCompile Include="armor.cpp">
       <Filter>Исходные файлы\Equipment\Armor</Filter>
     </ClCompile>
-    <ClCompile Include="equipment.cpp">
-      <Filter>Исходные файлы\Equipment</Filter>
-    </ClCompile>
     <ClCompile Include="itemFactory.cpp">
       <Filter>Исходные файлы\ItemFactory</Filter>
     </ClCompile>
     <ClCompile Include="monsterFactory.cpp">
       <Filter>Исходные файлы\MonsterFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="infectedMonster.cpp">
+      <Filter>Исходные файлы\Entity\Character\Infected Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="minigame.cpp">
+      <Filter>Исходные файлы\Minigame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +146,6 @@
     <ClInclude Include="armor.h">
       <Filter>Исходные файлы\Equipment\Armor</Filter>
     </ClInclude>
-    <ClInclude Include="equipment.h">
-      <Filter>Исходные файлы\Equipment</Filter>
-    </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
@@ -148,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="monsterFactory.h">
       <Filter>Исходные файлы\MonsterFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="infectedMonster.h">
+      <Filter>Исходные файлы\Entity\Character\Infected Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="minigame.h">
+      <Filter>Исходные файлы\Minigame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,34 +10,34 @@
 
 class Hero : public Character {
  public:
-  // конструктор
   Hero(const std::string& name, int id, int hp, int maxHp, int atk, int acc,
        int agl, int res, int inf, int crit, Weapon* currentWeapon = nullptr,
        Armor* currentArmor = nullptr);
 
-  // геттеры
   Weapon* getCurrentWeapon() const;
+  Armor* getCurrentArmor() const;
   Inventory& getInventory();
-  Armor* getCurrentArmor();
 
-  // функци
   void takeDamage(int amount) override;
   void attack(Character& target) override;
-
-  void equipEquipment(Weapon* newWeapon);
+  void equipWeapon(Weapon* newWeapon);
   void equipArmor(Armor* newArmor);
-
   void update() override;
 
-  // десруктор
+  // Механика заражения: DoT
+  void applyDot();
+
+  // Временный множитель для мини-игры
+  void setTempDamageMultiplier(int multiplier) { tempMultiplier = multiplier; }
+  void resetTempDamageMultiplier() { tempMultiplier = 1; }
+
   ~Hero();
 
  private:
   Weapon* currentWeapon;
-
   Inventory inventory;
-
   Armor* currentArmor;
+  int tempMultiplier = 1;
 };
 
-#endif  // HERO_H
+#endif

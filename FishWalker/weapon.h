@@ -1,5 +1,6 @@
 #ifndef WEAPON_H
 #define WEAPON_H
+
 #include <string>
 
 class Weapon {
@@ -12,17 +13,17 @@ class Weapon {
   int getWeaponAtk() const;
   int getWeaponType() const;
 
-  // деструктор
-  virtual ~Weapon();
-
- protected:
-  std::string weaponName;
-  int weaponAtk, weaponType;
-
   // сеттеры
   void setWeaponName(const std::string& newWeaponName);
   void setWeaponAtk(int newWeaponAtk);
   void setWeaponType(int newWeaponType);
+
+  // деструктор
+  virtual ~Weapon();
+
+ private:
+  std::string weaponName;
+  int weaponAtk, weaponType;
 };
 
 #endif  // EQUIPMENT_H

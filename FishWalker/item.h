@@ -1,8 +1,9 @@
 #ifndef ITEM_H
+#define ITEM_H
 
-#include <iostream>
+#include <string>
 
-enum class ItemType { HEAL, WEAPON, ARMOR };
+enum class ItemType { HEAL, WEAPON, ARMOR, ANTIDOTE };
 
 class Item {
  public:
