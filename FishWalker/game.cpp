@@ -22,6 +22,21 @@ Game::Game()
   window.setFramerateLimit(60);
   std::srand(static_cast<unsigned>(std::time(nullptr)));
 
+  if (!wallTexture.loadFromFile("assets/wall.png"))
+    std::cout << "Failed to load wall\n";
+
+  if (!floorTexture.loadFromFile("assets/floor.png"))
+    std::cout << "Failed to load floor\n";
+
+  if (!chestTexture.loadFromFile("assets/chest.png"))
+    std::cout << "Failed to load chest\n";
+
+  if (!monsterNormalTexture.loadFromFile("assets/normal_monster.png"))
+    std::cout << "Failed to load monster normal\n";
+
+  if (!monsterInfectedTexture.loadFromFile("assets/infected_monster.png"))
+    std::cout << "Failed to load monster infected\n";
+
   // 1. Заполняем карту полом (0)
   for (int y = 0; y < MAP_HEIGHT; ++y)
     for (int x = 0; x < MAP_WIDTH; ++x) map[y][x] = 0;
@@ -318,97 +333,139 @@ void Game::update(float deltaTime) {
 void Game::render() {
   window.clear();
 
+  // GAME OVER SCREEN
+
   if (gameOver && showGameOver) {
-    // Экран смерти
     static sf::Font gameOverFont;
     static bool fontLoaded = false;
-    if (!fontLoaded) {
-      fontLoaded = gameOverFont.openFromFile("arial.ttf");
-    }
+    if (!fontLoaded) fontLoaded = gameOverFont.openFromFile("arial.ttf");
+
     if (fontLoaded) {
       sf::Text text(gameOverFont);
       text.setCharacterSize(50);
       text.setFillColor(sf::Color::Red);
       text.setString("GAME OVER\nPress any key to exit");
+
       sf::FloatRect bounds = text.getLocalBounds();
-      text.setPosition(sf::Vector2f((window.getSize().x - bounds.size.x) / 2,
-                                    (window.getSize().y - bounds.size.y) / 2));
+      text.setPosition({(window.getSize().x - bounds.size.x) / 2,
+                        (window.getSize().y - bounds.size.y) / 2});
+
       window.draw(text);
     }
+
     window.display();
     return;
   }
 
-  // Отрисовка карты
+  sf::Sprite floorSprite(floorTexture);
+  sf::Sprite wallSprite(wallTexture);
+  sf::Sprite chestSprite(chestTexture);
+  sf::Sprite monsterNormalSprite(monsterNormalTexture);
+  sf::Sprite monsterInfectedSprite(monsterInfectedTexture);
+
+  // масштаб под клетку
+  auto scaleToCell = [&](sf::Sprite& s) {
+    s.setScale({(float)CELL_SIZE / s.getTexture().getSize().x,
+                (float)CELL_SIZE / s.getTexture().getSize().y});
+  };
+
+  scaleToCell(floorSprite);
+  scaleToCell(wallSprite);
+  scaleToCell(chestSprite);
+  scaleToCell(monsterNormalSprite);
+  scaleToCell(monsterInfectedSprite);
+
+  // КАРТА (ПОЛ + СТЕНЫ)
+
   for (int y = 0; y < MAP_HEIGHT; ++y) {
     for (int x = 0; x < MAP_WIDTH; ++x) {
-      sf::RectangleShape cell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
-      cell.setPosition(sf::Vector2f(x * CELL_SIZE, y * CELL_SIZE));
-      if (map[y][x] == 1)
-        cell.setFillColor(sf::Color(100, 100, 100));
-      else
-        cell.setFillColor(sf::Color(200, 200, 200));
-      window.draw(cell);
+      sf::Sprite& tileSprite = (map[y][x] == 1) ? wallSprite : floorSprite;
+
+      tileSprite.setPosition({(float)(x * CELL_SIZE), (float)(y * CELL_SIZE)});
+
+      window.draw(tileSprite);
     }
   }
 
-  // Сундуки
+  // СУНДУКИ
+
   for (const auto& box : boxes) {
-    if (box.active) {
-      sf::RectangleShape boxRect(sf::Vector2f(CELL_SIZE, CELL_SIZE));
-      boxRect.setFillColor(sf::Color(160, 100, 50));
-      boxRect.setPosition(sf::Vector2f(box.x * CELL_SIZE, box.y * CELL_SIZE));
-      window.draw(boxRect);
-    }
+    if (!box.active) continue;
+
+    chestSprite.setPosition(
+        {(float)(box.x * CELL_SIZE), (float)(box.y * CELL_SIZE)});
+
+    window.draw(chestSprite);
   }
 
-  // Монстры
+  // МОНСТРЫ (как раньше, но с текстурами)
+
   for (const auto& m : monsters) {
     if (m.alive) {
-      sf::RectangleShape monsterRect(sf::Vector2f(CELL_SIZE, CELL_SIZE));
-      if (dynamic_cast<InfectedMonster*>(m.ptr))
-        monsterRect.setFillColor(sf::Color(128, 0, 128));
-      else
-        monsterRect.setFillColor(sf::Color::Red);
-      monsterRect.setPosition(sf::Vector2f(m.x * CELL_SIZE, m.y * CELL_SIZE));
-      window.draw(monsterRect);
+      sf::Sprite monsterSprite(dynamic_cast<InfectedMonster*>(m.ptr)
+                                   ? monsterInfectedTexture
+                                   : monsterNormalTexture);
+
+      float scaleX = static_cast<float>(CELL_SIZE) /
+                     monsterSprite.getTexture().getSize().x;
+
+      float scaleY = static_cast<float>(CELL_SIZE) /
+                     monsterSprite.getTexture().getSize().y;
+
+      monsterSprite.setScale({scaleX, scaleY});
+
+      monsterSprite.setPosition({static_cast<float>(m.x * CELL_SIZE),
+                                 static_cast<float>(m.y * CELL_SIZE)});
+
+      window.draw(monsterSprite);
     }
   }
 
-  // Герой
-  sf::RectangleShape heroRect(sf::Vector2f(CELL_SIZE, CELL_SIZE));
+  // ГЕРОЙ (ПОКА БЕЗ ТЕКСТУРЫ)
+
+  sf::RectangleShape heroRect({(float)CELL_SIZE, (float)CELL_SIZE});
   heroRect.setFillColor(sf::Color::Green);
-  heroRect.setPosition(sf::Vector2f(heroX * CELL_SIZE, heroY * CELL_SIZE));
+  heroRect.setPosition({static_cast<float>(heroX * CELL_SIZE),
+                        static_cast<float>(heroY * CELL_SIZE)});
   window.draw(heroRect);
 
   // HUD
+
   static sf::Font hudFont;
   static bool hudFontLoaded = false;
-  if (!hudFontLoaded) {
-    hudFontLoaded = hudFont.openFromFile("arial.ttf");
-  }
+  if (!hudFontLoaded) hudFontLoaded = hudFont.openFromFile("arial.ttf");
+
   if (hudFontLoaded) {
     sf::Text hudText(hudFont);
     hudText.setCharacterSize(20);
     hudText.setFillColor(sf::Color::White);
-    hudText.setPosition(sf::Vector2f(10.f, 10.f));
+    hudText.setPosition({10.f, 10.f});
+
     hudText.setString("HP: " + std::to_string(hero.getHp()) + "/" +
                       std::to_string(hero.getMaxHp()) +
                       "  INF: " + std::to_string(hero.getInf()) + "/100");
+
     window.setView(window.getDefaultView());
     window.draw(hudText);
     window.setView(camera);
   }
 
+  // INVENTORY OVERLAY
+
   if (showMapInventory) {
     window.setView(window.getDefaultView());
+
     sf::RectangleShape overlay(
-        sf::Vector2f(window.getSize().x, window.getSize().y));
+        {(float)window.getSize().x, (float)window.getSize().y});
     overlay.setFillColor(sf::Color(0, 0, 0, 200));
     window.draw(overlay);
+
     if (mapInventoryText) window.draw(*mapInventoryText);
+
     window.setView(camera);
   }
+
+  // BATTLE UI
 
   if (inBattle) {
     window.setView(window.getDefaultView());

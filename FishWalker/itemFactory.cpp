@@ -16,9 +16,16 @@ Item ItemFactory::createWeapon() const {
 }
 Item ItemFactory::createItem() const {
   int r = rand() % 4;
-  if (r == 0) return createHealthPotion();
-  if (r == 1)
-    return createAntidote();  // добавляем антидот в случайные предметы
-  if (r == 2) return createArmor();
-  return createWeapon();
+  switch (r) {
+    case 0:
+      return createHealthPotion();
+    case 1:
+      return createAntidote();
+    case 2:
+      return createArmor();
+    case 3:
+      return createWeapon();
+    default:
+      return createHealthPotion();
+  }
 }

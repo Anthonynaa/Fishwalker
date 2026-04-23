@@ -48,6 +48,12 @@ class Game {
   int map[MAP_HEIGHT][MAP_WIDTH];
   int heroX, heroY;
 
+  sf::Texture wallTexture;
+  sf::Texture floorTexture;
+  sf::Texture chestTexture;
+  sf::Texture monsterNormalTexture;
+  sf::Texture monsterInfectedTexture;
+
   Hero hero;
   std::vector<MonsterInfo> monsters;
   std::vector<Box> boxes;
