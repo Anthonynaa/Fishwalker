@@ -1,4 +1,4 @@
-#include "battleUI.h"
+п»ї#include "battleUI.h"
 
 #include <iostream>
 
@@ -22,7 +22,6 @@ void BattleUI::init(sf::RenderWindow& window, Battle& battle) {
 
   if (!fontLoaded) {
     if (!sharedFont.openFromFile("arial.ttf")) {
-      // fallback
     }
     fontLoaded = true;
   }
@@ -109,17 +108,31 @@ void BattleUI::useSelectedItem() {
 
 void BattleUI::finishMinigame() {
   waitingForMinigame = false;
+
+  if (chestMinigameMode) {
+    chestMinigameMode = false;
+    chestMinigameFinished = true;
+
+    if (minigame.isSuccess())
+      chestMinigameResult = minigame.getDamageMultiplier();
+    else
+      chestMinigameResult = 0;
+
+    return;
+  }
+
   if (minigame.isSuccess()) {
     int multiplier = minigame.getDamageMultiplier();
     currentBattle->heroAttackWithMultiplier(multiplier);
   } else {
-    // Промах: монстр атакует в ответ
     if (currentBattle->isHeroAlive()) {
       currentBattle->getMonster().attack(currentBattle->getHero());
     }
   }
+
   currentBattle->getHero().applyDot();
   updateBarsAndText();
+
   if (currentBattle->isBattleOver()) {
     showResult = true;
     if (currentBattle->isHeroAlive())
@@ -187,7 +200,7 @@ void BattleUI::handleEvent(const sf::Event& event) {
     const auto* key = event.getIf<sf::Event::KeyPressed>();
     if (key->scancode == sf::Keyboard::Scancode::Num1) {
       int acc = currentBattle->getHero().getAcc();
-      minigame.start(acc);
+      minigame.start(MinigamePresets::Attack);
       waitingForMinigame = true;
     } else if (key->scancode == sf::Keyboard::Scancode::Num2) {
       showInventoryMenu();
@@ -196,10 +209,13 @@ void BattleUI::handleEvent(const sf::Event& event) {
 }
 
 void BattleUI::update(float deltaTime) {
+  if (waitingForMinigame) {
+    minigame.update(deltaTime);
+  }
   if (!currentBattle) return;
   if (waitingForMinigame) {
     minigame.update(deltaTime);
-    // Если мини-игра завершилась сама (по таймеру или достижению края)
+
     if (!minigame.isActive()) {
       finishMinigame();
     }
@@ -219,7 +235,23 @@ void BattleUI::render(sf::RenderWindow& window) {
   if (showInventory && inventoryText) window.draw(*inventoryText);
   if (waitingForMinigame) {
     minigame.render(window);
+    return;
   }
 }
+
+void BattleUI::startChestMinigame() {
+  chestMinigameMode = true;
+  chestMinigameFinished = false;
+  chestMinigameResult = 0;
+
+  minigame.start(MinigamePresets::Chest);
+  waitingForMinigame = true;
+}
+
+bool BattleUI::isMinigameRunning() const { return waitingForMinigame; }
+
+bool BattleUI::isChestMinigameFinished() const { return chestMinigameFinished; }
+
+int BattleUI::getChestMinigameResult() const { return chestMinigameResult; }
 
 bool BattleUI::isFinished() const { return battleFinished; }

@@ -12,4 +12,4 @@ class ItemFactory {
   Item createItem() const;
 };
 
-#endif  // ITEMFACTORY_H
+#endif

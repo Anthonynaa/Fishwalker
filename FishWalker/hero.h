@@ -24,10 +24,8 @@ class Hero : public Character {
   void equipArmor(Armor* newArmor);
   void update() override;
 
-  // Механика заражения: DoT
   void applyDot();
 
-  // Временный множитель для мини-игры
   void setTempDamageMultiplier(int multiplier) { tempMultiplier = multiplier; }
   void resetTempDamageMultiplier() { tempMultiplier = 1; }
 

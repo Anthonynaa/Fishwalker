@@ -11,7 +11,6 @@ class Character : public Entity {
             int acc, int agl, int res, int inf, int crit);
   virtual ~Character();
 
-  // Геттеры
   int getHp() const;
   int getMaxHp() const;
   int getAtk() const;
@@ -21,21 +20,17 @@ class Character : public Entity {
   int getInf() const;
   int getCrit() const;
 
-  // Методы изменения состояния
   bool isAlive() const;
   virtual void takeDamage(int amount);
   void heal(int amount);
   void takeInfection(int amount);
 
-  // Виртуальные методы
   virtual void attack(Character& target) = 0;
   virtual void update() = 0;
 
-  // Механика заражения
-  void updateInfectionEffects();  // пересчёт характеристик от INF
+  void updateInfectionEffects();
 
  protected:
-  // Сеттеры (защищённые)
   void setHp(int newHp);
   void setMaxHp(int newMaxHp);
   void setAtk(int newAtk);
@@ -45,9 +40,8 @@ class Character : public Entity {
   void setInf(int newInf);
   void setCrit(int newCrit);
 
-  // Поля
   int hp, maxHp, atk, acc, agl, res, inf, crit;
-  // Базовые значения (для восстановления после дебаффов)
+
   int baseAtk, baseAcc, baseAgl, baseRes, baseCrit, baseMaxHp;
 };
 

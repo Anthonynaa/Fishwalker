@@ -7,15 +7,12 @@
 
 class InfectedMonster : public Monster {
  public:
-  // десруктор
   ~InfectedMonster();
 
-  // конструктор
   InfectedMonster(const std::string& name, int id, int hp, int maxHp, int atk,
                   int acc, int agl, int res, int inf, int crit,
                   int infectionPower);
 
-  // функция
   int getInfectionPower() const;
 
   void attack(Character& target) override;
@@ -26,4 +23,4 @@ class InfectedMonster : public Monster {
   int infectionPower;
 };
 
-#endif  // INFECTEDMONSTER_H
+#endif

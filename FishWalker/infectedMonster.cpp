@@ -11,7 +11,7 @@ InfectedMonster::~InfectedMonster() {}
 void InfectedMonster::attack(Character& target) {
   if (!target.isAlive()) return;
   target.takeDamage(getAtk());
-  // Заражение накладывается только если цель ещё жива после урона
+
   if (target.isAlive()) {
     target.takeInfection(infectionPower);
   }

@@ -19,4 +19,4 @@ class Item {
   int value;
 };
 
-#endif  // ITEM_H
+#endif

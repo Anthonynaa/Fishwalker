@@ -37,13 +37,11 @@ void Hero::equipWeapon(Weapon* newWeapon) {
 void Hero::equipArmor(Armor* newArmor) {
   if (currentArmor) delete currentArmor;
   currentArmor = newArmor;
-  // Если броня меняет maxHp, нужно изменить baseMaxHp и пересчитать эффекты
-  // Для простоты пока не учитываем
 }
 
 void Hero::applyDot() {
   if (getInf() >= 80) {
-    int damage = (baseMaxHp * 10) / 100;
+    int damage = (baseMaxHp / 100);
     if (damage < 1) damage = 1;
     takeDamage(damage);
   }

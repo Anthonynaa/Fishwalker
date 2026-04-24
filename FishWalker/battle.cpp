@@ -40,7 +40,7 @@ void Battle::heroAttackWithMultiplier(int multiplier) {
     hero->setTempDamageMultiplier(multiplier);
     hero->attack(*enemies[0]);
     hero->resetTempDamageMultiplier();
-    if (!enemies[0]->isAlive()) return;  // монстр мЄртв Ц не атакуем в ответ
+    if (!enemies[0]->isAlive()) return;
     if (hero->isAlive()) {
       enemies[0]->attack(*hero);
     }
@@ -60,7 +60,7 @@ void Battle::monstersTurn() {
     }
   }
 }
-// ѕустые методы дл€ совместимости
+
 void Battle::displayAliveEnemies() {}
 void Battle::heroTurn() {}
 void Battle::startBattle() {}

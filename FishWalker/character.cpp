@@ -28,7 +28,6 @@ void Character::heal(int amount) { setHp(hp + amount); }
 
 void Character::takeInfection(int amount) { setInf(inf + amount); }
 
-// Геттеры
 int Character::getHp() const { return hp; }
 int Character::getMaxHp() const { return maxHp; }
 int Character::getAtk() const { return atk; }
@@ -38,12 +37,10 @@ int Character::getRes() const { return res; }
 int Character::getInf() const { return inf; }
 int Character::getCrit() const { return crit; }
 
-// Сеттеры
 void Character::setHp(int newHp) {
   if (newHp <= 0) newHp = 0;
   if (newHp > maxHp) newHp = maxHp;
   hp = newHp;
-  // Смерть можно обработать позже
 }
 
 void Character::setMaxHp(int newMaxHp) {
@@ -88,7 +85,6 @@ void Character::setInf(int newInf) {
 }
 
 void Character::updateInfectionEffects() {
-  // Восстанавливаем базовые значения
   atk = baseAtk;
   acc = baseAcc;
   agl = baseAgl;
@@ -96,16 +92,14 @@ void Character::updateInfectionEffects() {
   crit = baseCrit;
   maxHp = baseMaxHp;
 
-  // Эффект при INF >= 20: снижение максимального HP на 20%
   if (inf >= 20) {
     maxHp = (baseMaxHp * 80) / 100;
     if (maxHp < 1) maxHp = 1;
     if (hp > maxHp) hp = maxHp;
   }
 
-  // Эффект при INF >= 50: дебафф характеристик
   if (inf >= 50) {
-    int multiplier = 100;  // 100% = нет изменений
+    int multiplier = 100;
     if (inf >= 90) {
       multiplier = 50;
     } else {
@@ -122,5 +116,4 @@ void Character::updateInfectionEffects() {
     if (agl < 0) agl = 0;
     if (crit < 0) crit = 0;
   }
-  // При INF < 50 характеристики уже восстановлены
 }

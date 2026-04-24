@@ -1,1 +1,71 @@
+# Visual Studio
 .vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Debug/Release
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Bb]uild/
+
+# Allow .exe и .dll inside folders
+!**/bin/**/*.exe
+!**/bin/**/*.dll
+!**/[Dd]ebug/**/*.exe
+!**/[Dd]ebug/**/*.dll
+!**/[Rr]elease/**/*.exe
+!**/[Rr]elease/**/*.dll
+
+# Compilation files
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.idb
+*.ipdb
+*.iobj
+*.tlog
+*.lastbuildstate
+
+# IntelliSense
+*.sbr
+*.bsc
+ipch/
+*.ipch
+*.ncb
+*.db
+
+# Settings
+*.vspscc
+*.vssscc
+*.log
+
+# msbuild
+*.pidb
+*.psess
+*.vsp
+*.psess
+*.suo
+*.userprefs
+
+*.cd
+*.clw
+*.tmp
+*.rsp
+*.manifest
+*.dep
+*.vcxproj.user
+
+# System files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs
+*.log

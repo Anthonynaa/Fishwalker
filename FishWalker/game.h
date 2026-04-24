@@ -12,6 +12,7 @@
 #include "infectedMonster.h"
 #include "item.h"
 #include "itemFactory.h"
+#include "minigame.h"
 #include "monster.h"
 #include "monsterFactory.h"
 
@@ -41,10 +42,12 @@ class Game {
   void moveMonsters(float deltaTime);
   void openInventoryOnMap();
   Item createUniqueItem();
-  void showGameOverScreen();  // новый метод
+  void showGameOverScreen();
+  void showVictoryScreen();
 
   sf::RenderWindow window;
   sf::View camera;
+
   int map[MAP_HEIGHT][MAP_WIDTH];
   int heroX, heroY;
 
@@ -55,6 +58,7 @@ class Game {
   sf::Texture monsterInfectedTexture;
 
   Hero hero;
+
   std::vector<MonsterInfo> monsters;
   std::vector<Box> boxes;
 
@@ -75,8 +79,15 @@ class Game {
   bool knifeFound;
   bool armorFound;
 
-  bool gameOver;      // флаг окончания игры
-  bool showGameOver;  // показывать ли экран смерти
+  bool gameOver;
+  bool showGameOver;
+  bool gameWon;
+  bool showVictory;
+
+  int openingChestIndex;
+
+  std::string chestMessage;
+  float chestMessageTimer;
 };
 
 #endif

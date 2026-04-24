@@ -5,20 +5,16 @@
 
 class Armor {
  public:
-  // конструктор
   Armor(const std::string& armorName, int armorDef, int armorType);
 
-  // геттеры
   const std::string& getArmorName() const;
   int getArmorDef() const;
   int getArmorType() const;
 
-  // сеттеры
   void setArmorName(const std::string& newArmorName);
   void setArmorDef(int newArmorDef);
   void setArmorType(int newArmorType);
 
-  // деструктор
   virtual ~Armor();
 
  protected:
@@ -26,4 +22,4 @@ class Armor {
   int armorDef, armorType;
 };
 
-#endif  // ARMOR_H
+#endif

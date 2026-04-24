@@ -23,4 +23,4 @@ class Inventory {
   std::vector<Item> items;
 };
 
-#endif  // INVENTORY_H
+#endif

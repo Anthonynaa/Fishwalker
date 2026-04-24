@@ -1,41 +1,58 @@
-#include "Minigame.h"
+п»ї#include "Minigame.h"
 
 #include <cmath>
 #include <cstdlib>
+
+#include "constants.h"
 
 Minigame::Minigame()
     : active(false),
       success(false),
       multiplier(1),
-      barWidth(800.f),
-      barHeight(80.f),
+      barWidth(DEFAULT_BAR_WIDTH),
+      barHeight(DEFAULT_BAR_HEIGHT),
       targetPosition(0.f),
       currentPosition(0.f),
-      speed(700.f),
-      timeToStop(1.5f),
-      stopped(false) {}
+      speed(DEFAULT_BAR_SPEED),
+      timeToStop(DEFAULT_TIME_LIMIT),
+      stopped(false),
+      targetSize(DEFAULT_TARGET_SIZE),
+      perfectZone(DEFAULT_PERFECT_ZONE),
+      goodZone(DEFAULT_GOOD_ZONE) {}
 
-void Minigame::start(int accuracy) {
+void Minigame::start(const MinigameConfig& config) {
   active = true;
   success = false;
   stopped = false;
+
   multiplier = 1;
-  float targetWidth = 120.f;
-  float maxPos = barWidth - targetWidth;
-  if (maxPos < 0) maxPos = 0;
-  targetPosition = (rand() % (int)(maxPos + 1));
+
+  speed = config.markerSpeed;
+  timeToStop = config.timeLimit;
+
+  barWidth = DEFAULT_BAR_WIDTH;
+
   currentPosition = 0.f;
-  timeToStop = 1.5f;
+  targetPosition = 0.f;
+
+  float maxPos = barWidth - config.targetWidth;
+  if (maxPos < 0) maxPos = 0;
+
+  targetPosition = rand() % (int)(maxPos + 1);
+
+  targetSize = config.targetWidth;
+  perfectZone = config.perfectZone;
+  goodZone = config.goodZone;
 }
 
 void Minigame::update(float deltaTime) {
   if (!active) return;
   if (timeToStop > 0) {
     timeToStop -= deltaTime;
-    // Если маркер достиг правого края (с учётом его ширины 40)
-    if (currentPosition + 40.f >= barWidth && !stopped) {
-      stop();  // вызываем stop, который выставит active = false и определит
-               // результат
+
+    if (currentPosition + DEFAULT_MARKER_SIZE >= barWidth && !stopped) {
+      stop();
+
       return;
     }
     if (timeToStop <= 0) {
@@ -45,8 +62,8 @@ void Minigame::update(float deltaTime) {
   }
   if (!stopped && timeToStop > 0) {
     currentPosition += speed * deltaTime;
-    if (currentPosition + 40.f >= barWidth) {
-      currentPosition = barWidth - 40.f;
+    if (currentPosition + DEFAULT_MARKER_SIZE >= barWidth) {
+      currentPosition = barWidth - DEFAULT_MARKER_SIZE;
       stop();
       return;
     }
@@ -57,17 +74,17 @@ void Minigame::stop() {
   if (!active) return;
   stopped = true;
   float diff = std::abs(currentPosition - targetPosition);
-  if (diff < 80.f) {
+  if (diff < perfectZone) {
     success = true;
-    multiplier = 2;
-  } else if (diff < 120.f) {
+    multiplier = BOOSTED_MULTIPLIER;
+  } else if (diff < goodZone) {
     success = true;
-    multiplier = 1;
+    multiplier = STANDARD_MULTIPLIER;
   } else {
     success = false;
     multiplier = 0;
   }
-  active = false;  // <-- сбрасываем активность, чтобы UI перестал рисовать
+  active = false;
 }
 
 void Minigame::render(sf::RenderWindow& window) {
@@ -85,14 +102,14 @@ void Minigame::render(sf::RenderWindow& window) {
                                window.getSize().y / 2));
   window.draw(bar);
 
-  sf::RectangleShape targetRect(sf::Vector2f(120.f, barHeight));
+  sf::RectangleShape targetRect(sf::Vector2f(targetSize, barHeight));
   targetRect.setFillColor(sf::Color(220, 50, 50));
   targetRect.setPosition(
       sf::Vector2f((window.getSize().x - barWidth) / 2 + targetPosition,
                    window.getSize().y / 2));
   window.draw(targetRect);
 
-  sf::RectangleShape marker(sf::Vector2f(40.f, barHeight));
+  sf::RectangleShape marker(sf::Vector2f(DEFAULT_MARKER_SIZE, barHeight));
   marker.setFillColor(sf::Color(50, 220, 50));
   marker.setPosition(
       sf::Vector2f((window.getSize().x - barWidth) / 2 + currentPosition,
