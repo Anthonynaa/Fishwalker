@@ -2,7 +2,6 @@
 #define BATTLEUI_H
 
 #include <SFML/Graphics.hpp>
-#include <memory>
 
 #include "battle.h"
 #include "minigame.h"
@@ -10,13 +9,14 @@
 class BattleUI {
  public:
   BattleUI();
+  ~BattleUI();
+
   void init(sf::RenderWindow& window, Battle& battle);
   void handleEvent(const sf::Event& event);
   void update(float deltaTime);
   void render(sf::RenderWindow& window);
 
   bool isFinished() const;
-
   bool isChestMinigameFinished() const;
   int getChestMinigameResult() const;
   bool isMinigameRunning() const;
@@ -25,29 +25,27 @@ class BattleUI {
  private:
   Battle* currentBattle;
 
-  sf::Font font;
-  std::unique_ptr<sf::Text> heroHpText;
-  std::unique_ptr<sf::Text> monsterHpText;
-  std::unique_ptr<sf::Text> actionMenuText;
-  std::unique_ptr<sf::Text> resultText;
-  std::unique_ptr<sf::Text> inventoryText;
+  sf::Text* heroHpText;
+  sf::Text* monsterHpText;
+  sf::Text* actionMenuText;
+  sf::Text* resultText;
+  sf::Text* inventoryText;
 
   sf::RectangleShape heroHpBar;
   sf::RectangleShape monsterHpBar;
   sf::RectangleShape backgroundOverlay;
 
-  bool battleFinished = false;
-  bool showResult = false;
-  bool showInventory = false;
-  int selectedItemIndex = 0;
+  bool battleFinished;
+  bool showResult;
+  bool showInventory;
+  int selectedItemIndex;
 
   Minigame minigame;
+  bool waitingForMinigame;
 
-  bool waitingForMinigame = false;
-
-  bool chestMinigameMode = false;
-  bool chestMinigameFinished = false;
-  int chestMinigameResult = 0;
+  bool chestMinigameMode;
+  bool chestMinigameFinished;
+  int chestMinigameResult;
 
   void updateBarsAndText();
   void showInventoryMenu();

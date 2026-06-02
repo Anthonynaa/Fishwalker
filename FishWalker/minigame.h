@@ -15,13 +15,13 @@ struct MinigameConfig {
 
 namespace MinigamePresets {
 
-static const MinigameConfig Attack{ATTACK_BAR_SPEED, ATTACK_TARGET_WIDTH,
-                                   ATTACK_TIME_LIMIT, ATTACK_PERFECT_ZONE,
-                                   ATTACK_GOOD_ZONE};
+inline constexpr MinigameConfig Attack{ATTACK_BAR_SPEED, ATTACK_TARGET_WIDTH,
+                                       ATTACK_TIME_LIMIT, ATTACK_PERFECT_ZONE,
+                                       ATTACK_GOOD_ZONE};
 
-static const MinigameConfig Chest{CHEST_BAR_SPEED, CHEST_TARGET_WIDTH,
-                                  CHEST_TIME_LIMIT, CHEST_PERFECT_ZONE,
-                                  CHEST_GOOD_ZONE};
+inline constexpr MinigameConfig Chest{CHEST_BAR_SPEED, CHEST_TARGET_WIDTH,
+                                      CHEST_TIME_LIMIT, CHEST_PERFECT_ZONE,
+                                      CHEST_GOOD_ZONE};
 }  // namespace MinigamePresets
 
 class Minigame {
@@ -34,13 +34,6 @@ class Minigame {
   bool isActive() const;
   bool isSuccess() const;
   int getDamageMultiplier() const;
-
-  void startChestMinigame();
-
-  bool isMinigameRunning() const;
-
-  bool isChestMinigameFinished() const;
-  int getChestMinigameResult() const;
 
  private:
   bool active;
@@ -57,10 +50,6 @@ class Minigame {
   float targetSize;
   float perfectZone;
   float goodZone;
-
-  bool chestMinigameMode;
-  bool chestMinigameFinished;
-  int chestMinigameResult;
 };
 
 #endif

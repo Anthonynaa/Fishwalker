@@ -7,17 +7,11 @@
 
 class InfectedMonster : public Monster {
  public:
-  ~InfectedMonster();
-
   InfectedMonster(const std::string& name, int id, int hp, int maxHp, int atk,
-                  int acc, int agl, int res, int inf, int crit,
-                  int infectionPower);
-
-  int getInfectionPower() const;
-
+                  int inf, int infectionPower);
+  ~InfectedMonster();
   void attack(Character& target) override;
-
-  void update() override;
+  int getInfectionPower() const;
 
  private:
   int infectionPower;

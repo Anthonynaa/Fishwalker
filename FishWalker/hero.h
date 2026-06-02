@@ -10,9 +10,9 @@
 
 class Hero : public Character {
  public:
-  Hero(const std::string& name, int id, int hp, int maxHp, int atk, int acc,
-       int agl, int res, int inf, int crit, Weapon* currentWeapon = nullptr,
-       Armor* currentArmor = nullptr);
+  Hero(const std::string& name, int id, int hp, int maxHp, int atk, int inf,
+       Weapon* currentWeapon = nullptr, Armor* currentArmor = nullptr);
+  ~Hero();
 
   Weapon* getCurrentWeapon() const;
   Armor* getCurrentArmor() const;
@@ -22,14 +22,10 @@ class Hero : public Character {
   void attack(Character& target) override;
   void equipWeapon(Weapon* newWeapon);
   void equipArmor(Armor* newArmor);
-  void update() override;
-
   void applyDot();
 
   void setTempDamageMultiplier(int multiplier) { tempMultiplier = multiplier; }
   void resetTempDamageMultiplier() { tempMultiplier = 1; }
-
-  ~Hero();
 
  private:
   Weapon* currentWeapon;

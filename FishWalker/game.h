@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
-#include <memory>
 #include <vector>
 
 #include "battle.h"
@@ -47,7 +46,6 @@ class Game {
 
   sf::RenderWindow window;
   sf::View camera;
-
   int map[MAP_HEIGHT][MAP_WIDTH];
   int heroX, heroY;
 
@@ -58,23 +56,20 @@ class Game {
   sf::Texture monsterInfectedTexture;
 
   Hero hero;
-
   std::vector<MonsterInfo> monsters;
   std::vector<Box> boxes;
 
   bool inBattle;
-  std::unique_ptr<Battle> currentBattle;
+  Battle* currentBattle;
   BattleUI battleUI;
 
   MonsterFactory monsterFactory;
   ItemFactory itemFactory;
 
   sf::Clock clock;
-  float lastFrameTime;
 
   bool showMapInventory;
-  int selectedMapItemIndex;
-  std::unique_ptr<sf::Text> mapInventoryText;
+  sf::Text* mapInventoryText;
 
   bool knifeFound;
   bool armorFound;
@@ -85,7 +80,6 @@ class Game {
   bool showVictory;
 
   int openingChestIndex;
-
   std::string chestMessage;
   float chestMessageTimer;
 };

@@ -69,9 +69,6 @@
     <ClCompile Include="battle.cpp">
       <Filter>Исходные файлы\Battle</Filter>
     </ClCompile>
-    <ClCompile Include="entity.cpp">
-      <Filter>Исходные файлы\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="character.cpp">
       <Filter>Исходные файлы\Entity\Character</Filter>
     </ClCompile>
@@ -115,9 +112,6 @@
   <ItemGroup>
     <ClInclude Include="battle.h">
       <Filter>Исходные файлы\Battle</Filter>
-    </ClInclude>
-    <ClInclude Include="entity.h">
-      <Filter>Исходные файлы\Entity</Filter>
     </ClInclude>
     <ClInclude Include="character.h">
       <Filter>Исходные файлы\Entity\Character</Filter>

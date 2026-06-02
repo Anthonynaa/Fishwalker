@@ -1,7 +1,5 @@
 #include "battle.h"
 
-#include <iostream>
-
 Battle::Battle(Hero* hero, std::vector<Monster*> enemies)
     : hero(hero), enemies(enemies) {}
 
@@ -51,16 +49,3 @@ bool Battle::isHeroAlive() const { return hero->isAlive(); }
 Monster* Battle::getMonsterPtr() const {
   return enemies.empty() ? nullptr : enemies[0];
 }
-
-void Battle::monstersTurn() {
-  for (auto* m : enemies) {
-    if (m->isAlive()) {
-      m->attack(*hero);
-      if (!hero->isAlive()) break;
-    }
-  }
-}
-
-void Battle::displayAliveEnemies() {}
-void Battle::heroTurn() {}
-void Battle::startBattle() {}

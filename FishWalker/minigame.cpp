@@ -119,7 +119,7 @@ void Minigame::render(sf::RenderWindow& window) {
   static sf::Font font;
   static bool fontLoaded = false;
   if (!fontLoaded) {
-    fontLoaded = font.openFromFile("arial.ttf");
+    fontLoaded = font.openFromFile("supermario3dworld.otf");
   }
   if (fontLoaded) {
     sf::Text text(font);

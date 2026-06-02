@@ -1,53 +1,60 @@
-﻿  battleUI.cpp
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:         with
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:             T=unsigned int
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:         and
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:             T=float
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,56): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:         with
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:             T=unsigned int
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:         and
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:             T=float
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(56,36): warning C4244:         ]
+﻿  armor.cpp
+  battle.cpp
+  battleUI.cpp
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:         with
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:             T=unsigned int
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:         and
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:             T=float
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,56): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:         with
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:             T=unsigned int
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:         and
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:             T=float
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\battleUI.cpp(81,36): warning C4244:         ]
+  character.cpp
   game.cpp
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:         with
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:             T=unsigned int
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:         and
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:             T=float
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,67): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:         with
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:             T=unsigned int
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:         and
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:             T=float
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(93,47): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,58): warning C4244:         with
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,58): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,58): warning C4244:             T=float
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,58): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,39): warning C4244:         with
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,39): warning C4244:         [
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,39): warning C4244:             T=float
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(94,39): warning C4244:         ]
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(397,19): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(398,19): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:         with
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:             T=unsigned int
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:         and
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:             T=float
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,67): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:         with
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:             T=unsigned int
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:         and
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:             T=float
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(89,47): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,58): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,58): warning C4244:         with
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,58): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,58): warning C4244:             T=float
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,58): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,39): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,39): warning C4244:         with
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,39): warning C4244:         [
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,39): warning C4244:             T=float
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(90,39): warning C4244:         ]
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(322,19): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(322,48): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+  hero.cpp
+  infectedMonster.cpp
+  inventory.cpp
+  item.cpp
   itemFactory.cpp
   main.cpp
   minigame.cpp
@@ -97,6 +104,8 @@ C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\minigame.cpp(116,39): warning
 C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\minigame.cpp(116,39): warning C4244:         [
 C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\minigame.cpp(116,39): warning C4244:             T=float
 C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\minigame.cpp(116,39): warning C4244:         ]
+  monster.cpp
   monsterFactory.cpp
+  weapon.cpp
   Создание кода...
   FishWalker.vcxproj -> C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\x64\Debug\FishWalker.exe

@@ -12,6 +12,7 @@ class Item {
   const std::string& getName() const;
   ItemType getType() const;
   int getValue() const;
+  std::string getDescription() const;
 
  private:
   std::string name;

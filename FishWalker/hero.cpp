@@ -1,14 +1,16 @@
 #include "hero.h"
 
-Hero::Hero(const std::string& name, int id, int hp, int maxHp, int atk, int acc,
-           int agl, int res, int inf, int crit, Weapon* currentWeapon,
-           Armor* currentArmor)
-    : Character(name, id, hp, maxHp, atk, acc, agl, res, inf, crit),
+Hero::Hero(const std::string& name, int id, int hp, int maxHp, int atk, int inf,
+           Weapon* currentWeapon, Armor* currentArmor)
+    : Character(name, id, hp, maxHp, atk, inf),
       currentWeapon(currentWeapon),
       currentArmor(currentArmor),
       tempMultiplier(1) {}
 
-Hero::~Hero() {}
+Hero::~Hero() {
+  delete currentWeapon;
+  delete currentArmor;
+}
 
 Weapon* Hero::getCurrentWeapon() const { return currentWeapon; }
 Armor* Hero::getCurrentArmor() const { return currentArmor; }
@@ -46,5 +48,3 @@ void Hero::applyDot() {
     takeDamage(damage);
   }
 }
-
-void Hero::update() {}

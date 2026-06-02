@@ -1,17 +1,31 @@
 ﻿#include "battleUI.h"
 
-#include <iostream>
-
 static bool fontLoaded = false;
 static sf::Font sharedFont;
 
 BattleUI::BattleUI()
     : currentBattle(nullptr),
+      heroHpText(nullptr),
+      monsterHpText(nullptr),
+      actionMenuText(nullptr),
+      resultText(nullptr),
+      inventoryText(nullptr),
       battleFinished(false),
       showResult(false),
       showInventory(false),
       selectedItemIndex(0),
-      waitingForMinigame(false) {}
+      waitingForMinigame(false),
+      chestMinigameMode(false),
+      chestMinigameFinished(false),
+      chestMinigameResult(0) {}
+
+BattleUI::~BattleUI() {
+  delete heroHpText;
+  delete monsterHpText;
+  delete actionMenuText;
+  delete resultText;
+  delete inventoryText;
+}
 
 void BattleUI::init(sf::RenderWindow& window, Battle& battle) {
   currentBattle = &battle;
@@ -21,33 +35,44 @@ void BattleUI::init(sf::RenderWindow& window, Battle& battle) {
   waitingForMinigame = false;
 
   if (!fontLoaded) {
-    if (!sharedFont.openFromFile("arial.ttf")) {
+    if (!sharedFont.openFromFile("supermario3dworld.otf")) {
     }
     fontLoaded = true;
   }
 
-  heroHpText = std::make_unique<sf::Text>(sharedFont);
+  delete heroHpText;
+  heroHpText = nullptr;
+  delete monsterHpText;
+  monsterHpText = nullptr;
+  delete actionMenuText;
+  actionMenuText = nullptr;
+  delete resultText;
+  resultText = nullptr;
+  delete inventoryText;
+  inventoryText = nullptr;
+
+  heroHpText = new sf::Text(sharedFont);
   heroHpText->setCharacterSize(24);
   heroHpText->setFillColor(sf::Color::White);
   heroHpText->setPosition(sf::Vector2f(50.f, 50.f));
 
-  monsterHpText = std::make_unique<sf::Text>(sharedFont);
+  monsterHpText = new sf::Text(sharedFont);
   monsterHpText->setCharacterSize(24);
   monsterHpText->setFillColor(sf::Color::White);
   monsterHpText->setPosition(sf::Vector2f(500.f, 50.f));
 
-  actionMenuText = std::make_unique<sf::Text>(sharedFont);
+  actionMenuText = new sf::Text(sharedFont);
   actionMenuText->setCharacterSize(20);
   actionMenuText->setFillColor(sf::Color::Yellow);
   actionMenuText->setString("1 - Attack  2 - Item");
   actionMenuText->setPosition(sf::Vector2f(300.f, 450.f));
 
-  resultText = std::make_unique<sf::Text>(sharedFont);
+  resultText = new sf::Text(sharedFont);
   resultText->setCharacterSize(30);
   resultText->setFillColor(sf::Color::Red);
   resultText->setPosition(sf::Vector2f(300.f, 250.f));
 
-  inventoryText = std::make_unique<sf::Text>(sharedFont);
+  inventoryText = new sf::Text(sharedFont);
   inventoryText->setCharacterSize(20);
   inventoryText->setFillColor(sf::Color::White);
   inventoryText->setPosition(sf::Vector2f(300.f, 150.f));
@@ -84,7 +109,7 @@ void BattleUI::updateBarsAndText() {
 void BattleUI::showInventoryMenu() {
   showInventory = true;
   selectedItemIndex = 0;
-  std::string invStr = "Inventory (press number to use):\n";
+  std::string invStr = "Inventory (press number to use, ESC to close):\n";
   Inventory& inv = currentBattle->getHero().getInventory();
   const auto& items = inv.getItems();
   int i = 1;
@@ -112,12 +137,7 @@ void BattleUI::finishMinigame() {
   if (chestMinigameMode) {
     chestMinigameMode = false;
     chestMinigameFinished = true;
-
-    if (minigame.isSuccess())
-      chestMinigameResult = minigame.getDamageMultiplier();
-    else
-      chestMinigameResult = 0;
-
+    chestMinigameResult = minigame.getDamageMultiplier();
     return;
   }
 
@@ -135,10 +155,6 @@ void BattleUI::finishMinigame() {
 
   if (currentBattle->isBattleOver()) {
     showResult = true;
-    if (currentBattle->isHeroAlive())
-      resultText->setString("VICTORY!\nPress any key");
-    else
-      resultText->setString("DEFEAT...\nPress any key");
     battleFinished = true;
   }
 }
@@ -155,29 +171,15 @@ void BattleUI::handleEvent(const sf::Event& event) {
   if (showInventory) {
     if (event.is<sf::Event::KeyPressed>()) {
       const auto* key = event.getIf<sf::Event::KeyPressed>();
-      int num = -1;
-      if (key->scancode == sf::Keyboard::Scancode::Num1)
-        num = 0;
-      else if (key->scancode == sf::Keyboard::Scancode::Num2)
-        num = 1;
-      else if (key->scancode == sf::Keyboard::Scancode::Num3)
-        num = 2;
-      else if (key->scancode == sf::Keyboard::Scancode::Num4)
-        num = 3;
-      else if (key->scancode == sf::Keyboard::Scancode::Num5)
-        num = 4;
-      else if (key->scancode == sf::Keyboard::Scancode::Num6)
-        num = 5;
-      else if (key->scancode == sf::Keyboard::Scancode::Num7)
-        num = 6;
-      else if (key->scancode == sf::Keyboard::Scancode::Num8)
-        num = 7;
-      else if (key->scancode == sf::Keyboard::Scancode::Num9)
-        num = 8;
-      if (num != -1) {
-        selectedItemIndex = num;
+
+      auto sc = key->scancode;
+      auto first = sf::Keyboard::Scancode::Num1;
+      auto last = sf::Keyboard::Scancode::Num9;
+
+      if (sc >= first && sc <= last) {
+        selectedItemIndex = static_cast<int>(sc) - static_cast<int>(first);
         useSelectedItem();
-      } else if (key->scancode == sf::Keyboard::Scancode::Escape) {
+      } else if (sc == sf::Keyboard::Scancode::Escape) {
         showInventory = false;
       }
     }
@@ -199,7 +201,6 @@ void BattleUI::handleEvent(const sf::Event& event) {
   if (event.is<sf::Event::KeyPressed>()) {
     const auto* key = event.getIf<sf::Event::KeyPressed>();
     if (key->scancode == sf::Keyboard::Scancode::Num1) {
-      int acc = currentBattle->getHero().getAcc();
       minigame.start(MinigamePresets::Attack);
       waitingForMinigame = true;
     } else if (key->scancode == sf::Keyboard::Scancode::Num2) {
@@ -209,13 +210,9 @@ void BattleUI::handleEvent(const sf::Event& event) {
 }
 
 void BattleUI::update(float deltaTime) {
-  if (waitingForMinigame) {
-    minigame.update(deltaTime);
-  }
   if (!currentBattle) return;
   if (waitingForMinigame) {
     minigame.update(deltaTime);
-
     if (!minigame.isActive()) {
       finishMinigame();
     }
@@ -235,7 +232,6 @@ void BattleUI::render(sf::RenderWindow& window) {
   if (showInventory && inventoryText) window.draw(*inventoryText);
   if (waitingForMinigame) {
     minigame.render(window);
-    return;
   }
 }
 
@@ -243,15 +239,11 @@ void BattleUI::startChestMinigame() {
   chestMinigameMode = true;
   chestMinigameFinished = false;
   chestMinigameResult = 0;
-
   minigame.start(MinigamePresets::Chest);
   waitingForMinigame = true;
 }
 
 bool BattleUI::isMinigameRunning() const { return waitingForMinigame; }
-
 bool BattleUI::isChestMinigameFinished() const { return chestMinigameFinished; }
-
 int BattleUI::getChestMinigameResult() const { return chestMinigameResult; }
-
 bool BattleUI::isFinished() const { return battleFinished; }
