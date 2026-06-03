@@ -1,14 +1,13 @@
 #ifndef MONSTERFACTORY_H
 #define MONSTERFACTORY_H
 
-#include "constants.h"
-#include "infectedMonster.h"
-#include "monster.h"
+#include "GameDatabase.h"
+
+class Monster;
 
 class MonsterFactory {
  public:
-  Monster* createInfectedMonster() const;
-  Monster* createNormalMonster() const;
+  Monster* createMonster(const MonsterRecord& data) const;
 };
 
-#endif  // MONSTERFACTORY_H
+#endif

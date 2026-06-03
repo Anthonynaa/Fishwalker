@@ -1,87 +1,32 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SFML/Graphics.hpp>
-#include <vector>
-
-#include "battle.h"
-#include "battleUI.h"
-#include "constants.h"
+#include "GameDatabase.h"
 #include "hero.h"
-#include "infectedMonster.h"
-#include "item.h"
 #include "itemFactory.h"
-#include "minigame.h"
-#include "monster.h"
 #include "monsterFactory.h"
-
-struct Box {
-  int x, y;
-  bool active;
-  Item loot;
-};
-
-struct MonsterInfo {
-  Monster* ptr;
-  int x, y;
-  bool alive;
-  float moveTimer;
-};
 
 class Game {
  public:
   Game();
   ~Game();
+
   void run();
 
  private:
-  void processInput();
-  void update(float deltaTime);
-  void render();
-  void moveMonsters(float deltaTime);
-  void openInventoryOnMap();
-  Item createUniqueItem();
-  void showGameOverScreen();
-  void showVictoryScreen();
-
-  sf::RenderWindow window;
-  sf::View camera;
-  int map[MAP_HEIGHT][MAP_WIDTH];
-  int heroX, heroY;
-
-  sf::Texture wallTexture;
-  sf::Texture floorTexture;
-  sf::Texture chestTexture;
-  sf::Texture monsterNormalTexture;
-  sf::Texture monsterInfectedTexture;
-
   Hero hero;
-  std::vector<MonsterInfo> monsters;
-  std::vector<Box> boxes;
-
-  bool inBattle;
-  Battle* currentBattle;
-  BattleUI battleUI;
 
   MonsterFactory monsterFactory;
   ItemFactory itemFactory;
 
-  sf::Clock clock;
+  GameDatabase database;
 
-  bool showMapInventory;
-  sf::Text* mapInventoryText;
+  bool running;
 
-  bool knifeFound;
-  bool armorFound;
-
-  bool gameOver;
-  bool showGameOver;
-  bool gameWon;
-  bool showVictory;
-
-  int openingChestIndex;
-  std::string chestMessage;
-  float chestMessageTimer;
+  void showMainMenu();
+  void showInventory();
+  void startBattle(Monster* monster);
+  void explore();
 };
 
 #endif

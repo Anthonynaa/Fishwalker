@@ -46,9 +46,6 @@
     <Filter Include="Исходные файлы\Battle">
       <UniqueIdentifier>{cb53991e-454b-42f0-ae86-5d40b4fe10db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\Battle\BattleUI">
-      <UniqueIdentifier>{75561f3c-19b2-409f-be7e-3abd2d894105}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\ItemFactory">
       <UniqueIdentifier>{0ba5c19c-de91-4a71-9b0b-1e89dadb110d}</UniqueIdentifier>
     </Filter>
@@ -58,8 +55,14 @@
     <Filter Include="Исходные файлы\Entity\Character\Infected Monster">
       <UniqueIdentifier>{69514870-e337-48e2-b851-6d163463fdf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\Minigame">
-      <UniqueIdentifier>{808e0faa-756f-4d1d-b5fd-eab59601821a}</UniqueIdentifier>
+    <Filter Include="Исходные файлы\Data">
+      <UniqueIdentifier>{14409812-e2c1-44ed-88bb-23da86436c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Data Tables">
+      <UniqueIdentifier>{fb8dd92f-c6fc-4b6e-9c91-39d9e36f82b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Database">
+      <UniqueIdentifier>{5a9a17ec-3c62-4dc9-8674-9e4a12c6e213}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +87,6 @@
     <ClCompile Include="game.cpp">
       <Filter>Исходные файлы\Game</Filter>
     </ClCompile>
-    <ClCompile Include="battleUI.cpp">
-      <Filter>Исходные файлы\Battle\BattleUI</Filter>
-    </ClCompile>
     <ClCompile Include="inventory.cpp">
       <Filter>Исходные файлы\Inventory</Filter>
     </ClCompile>
@@ -105,8 +105,14 @@
     <ClCompile Include="infectedMonster.cpp">
       <Filter>Исходные файлы\Entity\Character\Infected Monster</Filter>
     </ClCompile>
-    <ClCompile Include="minigame.cpp">
-      <Filter>Исходные файлы\Minigame</Filter>
+    <ClCompile Include="CsvParser.cpp">
+      <Filter>Исходные файлы\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDatabase.cpp">
+      <Filter>Исходные файлы\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDatabase_Load.cpp">
+      <Filter>Исходные файлы\Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Исходные файлы\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="battleUI.h">
-      <Filter>Исходные файлы\Battle\BattleUI</Filter>
     </ClInclude>
     <ClInclude Include="inventory.h">
       <Filter>Исходные файлы\Inventory</Filter>
@@ -152,8 +155,28 @@
     <ClInclude Include="infectedMonster.h">
       <Filter>Исходные файлы\Entity\Character\Infected Monster</Filter>
     </ClInclude>
-    <ClInclude Include="minigame.h">
-      <Filter>Исходные файлы\Minigame</Filter>
+    <ClInclude Include="CsvParser.h">
+      <Filter>Исходные файлы\Data</Filter>
     </ClInclude>
+    <ClInclude Include="GameDatabase.h">
+      <Filter>Исходные файлы\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>Исходные файлы\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDatabase_Load.h">
+      <Filter>Исходные файлы\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDatabase_Query.h">
+      <Filter>Исходные файлы\Database</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Items.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="Monsters.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
   </ItemGroup>
 </Project>

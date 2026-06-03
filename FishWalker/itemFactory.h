@@ -1,15 +1,12 @@
 #ifndef ITEMFACTORY_H
 #define ITEMFACTORY_H
 
+#include "GameDatabase.h"
 #include "item.h"
 
 class ItemFactory {
  public:
-  Item createHealthPotion() const;
-  Item createAntidote() const;
-  Item createArmor() const;
-  Item createWeapon() const;
-  Item createItem() const;
+  Item createItem(const ItemRecord& data) const;
 };
 
 #endif
