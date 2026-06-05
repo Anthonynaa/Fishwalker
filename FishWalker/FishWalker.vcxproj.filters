@@ -64,6 +64,18 @@
     <Filter Include="Исходные файлы\Database">
       <UniqueIdentifier>{5a9a17ec-3c62-4dc9-8674-9e4a12c6e213}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Database\GameDatabase">
+      <UniqueIdentifier>{dc4832a3-a2ef-44d6-85b3-5b78296280dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Database\RoomDatabase">
+      <UniqueIdentifier>{0301bab3-3d6c-4a97-b8aa-10f8175e5af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Database\EventDatabase">
+      <UniqueIdentifier>{1e2ac7a5-50c7-4c71-951a-0034a83fd1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Systems">
+      <UniqueIdentifier>{930d1a97-e9a9-4241-ba14-676389e01d6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,10 +121,16 @@
       <Filter>Исходные файлы\Data</Filter>
     </ClCompile>
     <ClCompile Include="GameDatabase.cpp">
-      <Filter>Исходные файлы\Database</Filter>
+      <Filter>Исходные файлы\Database\GameDatabase</Filter>
     </ClCompile>
     <ClCompile Include="GameDatabase_Load.cpp">
-      <Filter>Исходные файлы\Database</Filter>
+      <Filter>Исходные файлы\Database\GameDatabase</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleUI.cpp">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>Исходные файлы\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,17 +176,32 @@
     <ClInclude Include="CsvParser.h">
       <Filter>Исходные файлы\Data</Filter>
     </ClInclude>
-    <ClInclude Include="GameDatabase.h">
-      <Filter>Исходные файлы\Database</Filter>
-    </ClInclude>
     <ClInclude Include="ItemData.h">
       <Filter>Исходные файлы\Database</Filter>
     </ClInclude>
+    <ClInclude Include="GameDatabase.h">
+      <Filter>Исходные файлы\Database\GameDatabase</Filter>
+    </ClInclude>
     <ClInclude Include="GameDatabase_Load.h">
-      <Filter>Исходные файлы\Database</Filter>
+      <Filter>Исходные файлы\Database\GameDatabase</Filter>
     </ClInclude>
     <ClInclude Include="GameDatabase_Query.h">
-      <Filter>Исходные файлы\Database</Filter>
+      <Filter>Исходные файлы\Database\GameDatabase</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomDatabase.h">
+      <Filter>Исходные файлы\Database\RoomDatabase</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleUI.h">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDatabase.h">
+      <Filter>Исходные файлы\Database\EventDatabase</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSystem.h">
+      <Filter>Исходные файлы\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomObjectDatabase.h">
+      <Filter>Исходные файлы\Database\RoomDatabase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +209,18 @@
       <Filter>Исходные файлы\Data Tables</Filter>
     </None>
     <None Include="Monsters.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="Rooms.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="RoomConnections.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="Events.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="RoomObjects.csv">
       <Filter>Исходные файлы\Data Tables</Filter>
     </None>
   </ItemGroup>

@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 
+#include "EventDatabase.h"
+#include "RoomDatabase.h"
+#include "RoomObjectDatabase.h"
+
 struct ItemRecord {
   int id;
   std::string name;
@@ -27,6 +31,12 @@ class GameDatabase {
  public:
   std::vector<ItemRecord> items;
   std::vector<MonsterRecord> monsters;
+
+  std::vector<RoomRecord> rooms;
+  std::vector<RoomConnectionRecord> roomConnections;
+  std::vector<RoomObjectRecord> roomObjects;
+
+  std::vector<EventRecord> events;
 };
 
 #endif

@@ -1,0 +1,5 @@
+roomId;targetRoomId;choiceText
+1;2;Walk to the pier
+2;1;Return to the beach
+2;3;Enter the ship
+3;2;Leave the ship

@@ -142,7 +142,9 @@
     <ClCompile Include="armor.cpp" />
     <ClCompile Include="battle.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="ConsoleUI.cpp" />
     <ClCompile Include="CsvParser.cpp" />
+    <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="GameDatabase.cpp" />
     <ClCompile Include="GameDatabase_Load.cpp" />
     <ClCompile Include="infectedMonster.cpp" />
@@ -160,8 +162,11 @@
     <ClInclude Include="armor.h" />
     <ClInclude Include="battle.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="ConsoleUI.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="CsvParser.h" />
+    <ClInclude Include="EventDatabase.h" />
+    <ClInclude Include="EventSystem.h" />
     <ClInclude Include="GameDatabase.h" />
     <ClInclude Include="GameDatabase_Load.h" />
     <ClInclude Include="GameDatabase_Query.h" />
@@ -169,6 +174,8 @@
     <ClInclude Include="ItemData.h" />
     <ClInclude Include="itemFactory.h" />
     <ClInclude Include="monsterFactory.h" />
+    <ClInclude Include="RoomDatabase.h" />
+    <ClInclude Include="RoomObjectDatabase.h" />
     <ClInclude Include="weapon.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="hero.h" />
@@ -177,8 +184,12 @@
     <ClInclude Include="monster.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Events.csv" />
     <None Include="Items.csv" />
     <None Include="Monsters.csv" />
+    <None Include="RoomObjects.csv" />
+    <None Include="Rooms.csv" />
+    <None Include="RoomConnections.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

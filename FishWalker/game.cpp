@@ -3,8 +3,7 @@
 #include <ctime>
 #include <iostream>
 
-#include "CsvParser.h"
-#include "GameDatabase.h"
+#include "ConsoleUI.h"
 #include "GameDatabase_Load.h"
 #include "GameDatabase_Query.h"
 #include "battle.h"
@@ -13,11 +12,16 @@
 Game::Game()
     : hero("Fisherman", HERO_ID, HERO_START_HP, HERO_MAX_HP, HERO_ATK, HERO_INF,
            nullptr, nullptr),
-      running(true) {
+      running(true),
+      currentRoomId(1) {
   srand(static_cast<unsigned>(time(nullptr)));
 
   GameDatabase_Load::LoadItems(database, "Items.csv");
   GameDatabase_Load::LoadMonsters(database, "Monsters.csv");
+  GameDatabase_Load::LoadRooms(database, "Rooms.csv");
+  GameDatabase_Load::LoadRoomConnections(database, "RoomConnections.csv");
+  GameDatabase_Load::LoadEvents(database, "Events.csv");
+  GameDatabase_Load::LoadRoomObjects(database, "RoomObjects.csv");
 }
 
 Game::~Game() {}
@@ -27,12 +31,20 @@ void Game::showMainMenu() {
   std::cout << "        FISHWALKER\n";
   std::cout << "=========================\n";
 
-  std::cout << "HP: " << hero.getHp() << "/" << hero.getMaxHp() << "\n";
+  const RoomRecord* room =
+      GameDatabase_Query::FindRoomById(database, currentRoomId);
 
-  std::cout << "INF: " << hero.getInf() << "/100\n";
+  if (room) {
+    std::cout << "\nLocation: " << room->title << "\n";
+  }
 
-  std::cout << "\n1. Explore";
-  std::cout << "\n2. Inventory";
+  std::cout << "\nHP: " << hero.getHp() << "/" << hero.getMaxHp();
+
+  std::cout << "\nINF: " << hero.getInf() << "/100\n";
+
+  std::cout << "\n1. Actions";
+  std::cout << "\n2. Character";
+  std::cout << "\n3. Inventory";
   std::cout << "\n0. Exit";
 
   std::cout << "\n\n> ";
@@ -95,65 +107,179 @@ void Game::startBattle(Monster* monster) {
       case 2:
         showInventory();
         break;
-
-      default:
-        break;
     }
   }
 
-  if (hero.isAlive()) {
+  if (hero.isAlive())
     std::cout << "\nMonster defeated!\n";
-  } else {
+  else
     std::cout << "\nYou died!\n";
-  }
 
   delete monster;
 }
 
-void Game::explore() {
-  int eventRoll = rand() % 100;
+void Game::triggerEvent(int eventId) {
+  const EventRecord* event =
+      GameDatabase_Query::FindEventById(database, eventId);
 
-  if (eventRoll < 60) {
-    if (database.monsters.empty()) {
-      std::cout << "No monsters loaded!\n";
+  if (!event) return;
+
+  if (event->once && completedEvents.count(eventId)) {
+    std::cout << "\nThere's nothing else of interest here.\n";
+    return;
+  }
+  std::cout << "\n" << event->text << "\n";
+
+  if (event->rewardItemId > 0) {
+    const ItemRecord* itemData =
+        GameDatabase_Query::FindItemById(database, event->rewardItemId);
+
+    if (itemData) {
+      Item item = itemFactory.createItem(*itemData);
+
+      hero.getInventory().addItem(item);
+
+      std::cout << "\nReceived: " << item.getName() << "\n";
+    }
+  }
+
+  if (event->spawnMonsterId > 0) {
+    const MonsterRecord* monsterData =
+        GameDatabase_Query::FindMonsterById(database, event->spawnMonsterId);
+
+    if (monsterData) {
+      Monster* monster = monsterFactory.createMonster(*monsterData);
+
+      startBattle(monster);
+    }
+  }
+
+  completedEvents.insert(eventId);
+}
+
+void Game::lookAround() {
+  const RoomRecord* room =
+      GameDatabase_Query::FindRoomById(database, currentRoomId);
+
+  if (!room) return;
+
+  while (true) {
+    ConsoleUI::PrintHeader(room->title);
+
+    std::cout << room->description << "\n";
+
+    auto objects =
+        GameDatabase_Query::GetObjectsInRoom(database, currentRoomId);
+
+    if (objects.empty()) {
+      std::cout << "\nNothing interesting here.\n";
       return;
     }
 
-    int index = rand() % database.monsters.size();
+    std::cout << "\nObjects:\n";
 
-    Monster* monster = monsterFactory.createMonster(database.monsters[index]);
-
-    startBattle(monster);
-  } else {
-    if (database.items.empty()) {
-      std::cout << "No items loaded!\n";
-      return;
+    for (size_t i = 0; i < objects.size(); i++) {
+      std::cout << i + 1 << ". " << objects[i]->name << "\n";
     }
 
-    int index = rand() % database.items.size();
+    std::cout << "\n0. Back\n> ";
 
-    Item loot = itemFactory.createItem(database.items[index]);
+    int choice;
+    std::cin >> choice;
 
-    std::cout << "\nYou found: " << loot.getName() << "\n";
+    if (choice == 0) return;
 
-    hero.getInventory().addItem(loot);
+    if (choice < 1 || choice > static_cast<int>(objects.size())) continue;
+
+    const RoomObjectRecord* object = objects[choice - 1];
+
+    ConsoleUI::PrintHeader(object->name);
+
+    std::cout << object->description << "\n";
+
+    if (object->eventId > 0) {
+      triggerEvent(object->eventId);
+    }
+
+    std::cout << "\nPress Enter to continue...";
+    std::cin.ignore(10000, '\n');
+    std::cin.get();
+  }
+}
+
+void Game::showCharacter() {
+  ConsoleUI::PrintHeader("Character");
+
+  std::cout << "HP: " << hero.getHp() << "/" << hero.getMaxHp() << "\n";
+
+  std::cout << "INF: " << hero.getInf() << "/100\n";
+}
+
+void Game::showActionsMenu() {
+  while (true) {
+    int choice = ConsoleUI::ShowMenu(
+        "Actions", {"Look Around", "Move", "Talk", "Interact"});
+
+    switch (choice) {
+      case 1:
+        lookAround();
+        break;
+
+      case 2:
+        moveToRoom();
+        break;
+
+      case 3:
+        std::cout << "\nNobody to talk to.\n";
+        break;
+
+      case 4:
+        std::cout << "\nNothing to interact with.\n";
+        break;
+
+      case 0:
+        return;
+    }
+  }
+}
+
+void Game::moveToRoom() {
+  auto connections =
+      GameDatabase_Query::GetConnectionsFromRoom(database, currentRoomId);
+
+  if (connections.empty()) {
+    std::cout << "\nThere's nowhere to go.\n";
+    return;
+  }
+
+  ConsoleUI::PrintHeader("Travel");
+
+  for (size_t i = 0; i < connections.size(); i++) {
+    std::cout << i + 1 << ". " << connections[i]->choiceText << "\n";
+  }
+
+  std::cout << "\n0. Back\n> ";
+
+  int choice;
+  std::cin >> choice;
+
+  if (choice <= 0 || choice > static_cast<int>(connections.size())) return;
+
+  currentRoomId = connections[choice - 1]->targetRoomId;
+
+  const RoomRecord* room =
+      GameDatabase_Query::FindRoomById(database, currentRoomId);
+
+  if (!room) return;
+
+  std::cout << "\nYou entered: " << room->title << "\n";
+
+  if (room->enterEventId > 0) {
+    triggerEvent(room->enterEventId);
   }
 }
 
 void Game::run() {
-  GameDatabase db;
-
-  GameDatabase_Load::LoadMonsters(db, "Monsters.csv");
-
-  const MonsterRecord* monsterData = GameDatabase_Query::FindMonsterById(db, 2);
-
-  if (monsterData) {
-    Monster* monster = monsterFactory.createMonster(*monsterData);
-
-    std::cout << monster->getName() << "\n";
-
-    delete monster;
-  }
   while (running && hero.isAlive()) {
     showMainMenu();
 
@@ -162,10 +288,14 @@ void Game::run() {
 
     switch (choice) {
       case 1:
-        explore();
+        showActionsMenu();
         break;
 
       case 2:
+        showCharacter();
+        break;
+
+      case 3:
         showInventory();
         break;
 
@@ -177,5 +307,6 @@ void Game::run() {
         break;
     }
   }
+
   std::cout << "\nGame finished.\n";
 }

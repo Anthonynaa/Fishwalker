@@ -1,0 +1,5 @@
+id;roomId;name;description;eventId
+1;1;Barrel;An old wooden barrel.;2
+2;1;Fishing Net;A torn fishing net.;1
+3;1;Boat;A small fishing boat.;0
+4;3;Corpse;Something looks wrong with this body.;3
