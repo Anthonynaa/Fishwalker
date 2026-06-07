@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "EventDatabase.h"
+#include "NpcDatabase.h"
 #include "RoomDatabase.h"
 #include "RoomObjectDatabase.h"
 
@@ -37,6 +38,13 @@ class GameDatabase {
   std::vector<RoomObjectRecord> roomObjects;
 
   std::vector<EventRecord> events;
+
+  std::vector<NpcRecord> npcs;
+
+  std::vector<DialogueNodeRecord> dialogueNodes;
+  std::vector<DialogueChoiceRecord> dialogueChoices;
+
+  std::vector<RoomNpcRecord> roomNpcs;
 };
 
 #endif

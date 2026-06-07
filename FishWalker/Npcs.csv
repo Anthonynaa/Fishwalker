@@ -1,0 +1,3 @@
+id;name;description;roomId;firstDialogueNodeId;enabled
+1;Old Fisherman;A tired fisherman.;1;1;1
+2;Merchant;A travelling merchant.;1;2;0

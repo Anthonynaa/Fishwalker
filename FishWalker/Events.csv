@@ -1,4 +1,6 @@
-id;text;rewardItemId;spawnMonsterId;once
-1;The smell of fish fills the air.;0;0;1
-2;You found a rusty knife inside the barrel.;4;0;1
-3;The corpse comes to life and jumps at you!;0;2;1
+id;text;type;value;once
+1;The smell of fish fills the air.;NONE;0;1
+2;You found a rusty knife inside the barrel.;GIVE_ITEM;4;1
+3;The corpse comes to life and jumps at you!;SPAWN_MONSTER;2;1
+4;A merchant arrives.;UNLOCK_NPC;3;1
+5;The old man hands you a bottle of something.;GIVE_ITEM;1;1

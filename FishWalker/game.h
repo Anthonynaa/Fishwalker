@@ -19,6 +19,18 @@ class Game {
 
   void run();
 
+  GameDatabase& getDatabase();
+
+  Hero& getHero();
+
+  MonsterFactory& getMonsterFactory();
+
+  ItemFactory& getItemFactory();
+
+  bool isEventCompleted(int eventId) const;
+
+  void completeEvent(int eventId);
+
  private:
   Hero hero;
 
@@ -45,6 +57,10 @@ class Game {
   void showCharacter();
 
   std::set<int> completedEvents;
+
+  void showTalkMenu();
+  void startDialogue(int nodeId);
+  void talkToNpc(int npcId);
 };
 
 #endif

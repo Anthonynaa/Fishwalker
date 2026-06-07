@@ -12,6 +12,8 @@ class ConsoleUI {
                       const std::vector<std::string>& options);
 
   static void Pause();
+
+  static int ReadInt();
 };
 
 #endif

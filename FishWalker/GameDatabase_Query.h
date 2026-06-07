@@ -55,6 +55,54 @@ inline std::vector<const RoomObjectRecord*> GetObjectsInRoom(
   return result;
 }
 
+inline const NpcRecord* FindNpcById(const GameDatabase& db, int id) {
+  return FindById(db.npcs, id);
+}
+
+inline NpcRecord* FindNpcByIdMutable(GameDatabase& db, int id) {
+  for (auto& npc : db.npcs)
+    if (npc.id == id) return &npc;
+
+  return nullptr;
+}
+
+inline const DialogueNodeRecord* FindDialogueNodeById(const GameDatabase& db,
+                                                      int id) {
+  return FindById(db.dialogueNodes, id);
+}
+
+inline std::vector<const DialogueChoiceRecord*> GetChoicesForNode(
+    const GameDatabase& db, int nodeId) {
+  std::vector<const DialogueChoiceRecord*> result;
+
+  for (const auto& choice : db.dialogueChoices) {
+    if (choice.nodeId == nodeId) {
+      result.push_back(&choice);
+    }
+  }
+
+  return result;
+}
+
+inline std::vector<const NpcRecord*> GetNpcsInRoom(const GameDatabase& db,
+                                                   int roomId) {
+  std::vector<const NpcRecord*> result;
+
+  for (const auto& roomNpc : db.roomNpcs) {
+    if (roomNpc.roomId != roomId) continue;
+
+    const NpcRecord* npc = FindNpcById(db, roomNpc.npcId);
+
+    if (!npc) continue;
+
+    if (!npc->enabled) continue;
+
+    result.push_back(npc);
+  }
+
+  return result;
+}
+
 }  // namespace GameDatabase_Query
 
 #endif

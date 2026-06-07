@@ -19,6 +19,14 @@ bool LoadEvents(GameDatabase& db, const std::string& filename);
 
 bool LoadRoomObjects(GameDatabase& db, const std::string& filename);
 
+bool LoadNpcs(GameDatabase& db, const std::string& filename);
+
+bool LoadDialogueNodes(GameDatabase& db, const std::string& filename);
+
+bool LoadDialogueChoices(GameDatabase& db, const std::string& filename);
+
+bool LoadRoomNpcs(GameDatabase& db, const std::string& filename);
+
 }  // namespace GameDatabase_Load
 
 #endif

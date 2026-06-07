@@ -109,6 +109,22 @@ bool GameDatabase_Load::LoadRoomConnections(GameDatabase& db,
   return true;
 }
 
+EventType ParseEventType(const std::string& str) {
+  if (str == "GIVE_ITEM") return EventType::GIVE_ITEM;
+
+  if (str == "SPAWN_MONSTER") return EventType::SPAWN_MONSTER;
+
+  if (str == "START_QUEST") return EventType::START_QUEST;
+
+  if (str == "COMPLETE_QUEST") return EventType::COMPLETE_QUEST;
+
+  if (str == "UNLOCK_NPC") return EventType::UNLOCK_NPC;
+
+  if (str == "OPEN_SHOP") return EventType::OPEN_SHOP;
+
+  return EventType::NONE;
+}
+
 bool GameDatabase_Load::LoadEvents(GameDatabase& db,
                                    const std::string& filename) {
   auto data = CsvParser::parseFile(filename);
@@ -126,8 +142,8 @@ bool GameDatabase_Load::LoadEvents(GameDatabase& db,
 
     event.id = std::stoi(row[0]);
     event.text = row[1];
-    event.rewardItemId = std::stoi(row[2]);
-    event.spawnMonsterId = std::stoi(row[3]);
+    event.type = ParseEventType(row[2]);
+    event.value = std::stoi(row[3]);
     event.once = std::stoi(row[4]) != 0;
 
     db.events.push_back(event);
@@ -135,6 +151,7 @@ bool GameDatabase_Load::LoadEvents(GameDatabase& db,
 
   return true;
 }
+
 bool GameDatabase_Load::LoadRoomObjects(GameDatabase& db,
                                         const std::string& filename) {
   auto data = CsvParser::parseFile(filename);
@@ -157,6 +174,112 @@ bool GameDatabase_Load::LoadRoomObjects(GameDatabase& db,
     object.eventId = std::stoi(row[4]);
 
     db.roomObjects.push_back(object);
+  }
+
+  return true;
+}
+
+bool GameDatabase_Load::LoadNpcs(GameDatabase& db,
+                                 const std::string& filename) {
+  auto data = CsvParser::parseFile(filename);
+
+  db.npcs.clear();
+
+  if (data.size() <= 1) return false;
+
+  for (size_t i = 1; i < data.size(); i++) {
+    const auto& row = data[i];
+
+    if (row.size() < 5) continue;
+
+    NpcRecord npc;
+
+    npc.id = std::stoi(row[0]);
+    npc.name = row[1];
+    npc.description = row[2];
+    npc.roomId = std::stoi(row[3]);
+    npc.firstDialogueNodeId = std::stoi(row[4]);
+    npc.enabled = std::stoi(row[5]) != 0;
+
+    db.npcs.push_back(npc);
+  }
+
+  return true;
+}
+
+bool GameDatabase_Load::LoadDialogueNodes(GameDatabase& db,
+                                          const std::string& filename) {
+  auto data = CsvParser::parseFile(filename);
+
+  db.dialogueNodes.clear();
+
+  if (data.size() <= 1) return false;
+
+  for (size_t i = 1; i < data.size(); i++) {
+    const auto& row = data[i];
+
+    if (row.size() < 3) continue;
+
+    DialogueNodeRecord node;
+
+    node.id = std::stoi(row[0]);
+    node.npcId = std::stoi(row[1]);
+    node.text = row[2];
+
+    db.dialogueNodes.push_back(node);
+  }
+
+  return true;
+}
+
+bool GameDatabase_Load::LoadDialogueChoices(GameDatabase& db,
+                                            const std::string& filename) {
+  auto data = CsvParser::parseFile(filename);
+
+  db.dialogueChoices.clear();
+
+  if (data.size() <= 1) return false;
+
+  for (size_t i = 1; i < data.size(); i++) {
+    const auto& row = data[i];
+
+    if (row.size() < 7) continue;
+
+    DialogueChoiceRecord choice;
+
+    choice.id = std::stoi(row[0]);
+    choice.nodeId = std::stoi(row[1]);
+    choice.text = row[2];
+    choice.nextNodeId = std::stoi(row[3]);
+    choice.eventId = std::stoi(row[4]);
+    choice.requiredEventId = std::stoi(row[5]);
+    choice.forbiddenEventId = std::stoi(row[6]);
+
+    db.dialogueChoices.push_back(choice);
+  }
+
+  return true;
+}
+
+bool GameDatabase_Load::LoadRoomNpcs(GameDatabase& db,
+                                     const std::string& filename) {
+  auto data = CsvParser::parseFile(filename);
+
+  db.roomNpcs.clear();
+
+  if (data.size() <= 1) return false;
+
+  for (size_t i = 1; i < data.size(); i++) {
+    const auto& row = data[i];
+
+    if (row.size() < 2) continue;
+
+    RoomNpcRecord roomNpc;
+
+    roomNpc.roomId = std::stoi(row[0]);
+    roomNpc.npcId = std::stoi(row[1]);
+
+    db.roomNpcs.push_back(roomNpc);
   }
 
   return true;

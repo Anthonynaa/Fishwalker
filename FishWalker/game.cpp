@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "ConsoleUI.h"
+#include "EventSystem.h"
 #include "GameDatabase_Load.h"
 #include "GameDatabase_Query.h"
 #include "battle.h"
@@ -22,6 +23,10 @@ Game::Game()
   GameDatabase_Load::LoadRoomConnections(database, "RoomConnections.csv");
   GameDatabase_Load::LoadEvents(database, "Events.csv");
   GameDatabase_Load::LoadRoomObjects(database, "RoomObjects.csv");
+  GameDatabase_Load::LoadNpcs(database, "Npcs.csv");
+  GameDatabase_Load::LoadDialogueNodes(database, "DialogueNodes.csv");
+  GameDatabase_Load::LoadDialogueChoices(database, "DialogueChoices.csv");
+  GameDatabase_Load::LoadRoomNpcs(database, "RoomNpcs.csv");
 }
 
 Game::~Game() {}
@@ -67,8 +72,7 @@ void Game::showInventory() {
   std::cout << "\n0. Back";
   std::cout << "\n> ";
 
-  int choice;
-  std::cin >> choice;
+  int choice = ConsoleUI::ReadInt();
 
   if (choice > 0 && choice <= static_cast<int>(items.size())) {
     hero.getInventory().useItem(choice - 1, hero);
@@ -95,8 +99,7 @@ void Game::startBattle(Monster* monster) {
     std::cout << "\n2. Inventory";
     std::cout << "\n> ";
 
-    int choice;
-    std::cin >> choice;
+    int choice = ConsoleUI::ReadInt();
 
     switch (choice) {
       case 1:
@@ -119,42 +122,7 @@ void Game::startBattle(Monster* monster) {
 }
 
 void Game::triggerEvent(int eventId) {
-  const EventRecord* event =
-      GameDatabase_Query::FindEventById(database, eventId);
-
-  if (!event) return;
-
-  if (event->once && completedEvents.count(eventId)) {
-    std::cout << "\nThere's nothing else of interest here.\n";
-    return;
-  }
-  std::cout << "\n" << event->text << "\n";
-
-  if (event->rewardItemId > 0) {
-    const ItemRecord* itemData =
-        GameDatabase_Query::FindItemById(database, event->rewardItemId);
-
-    if (itemData) {
-      Item item = itemFactory.createItem(*itemData);
-
-      hero.getInventory().addItem(item);
-
-      std::cout << "\nReceived: " << item.getName() << "\n";
-    }
-  }
-
-  if (event->spawnMonsterId > 0) {
-    const MonsterRecord* monsterData =
-        GameDatabase_Query::FindMonsterById(database, event->spawnMonsterId);
-
-    if (monsterData) {
-      Monster* monster = monsterFactory.createMonster(*monsterData);
-
-      startBattle(monster);
-    }
-  }
-
-  completedEvents.insert(eventId);
+  EventSystem::ExecuteEvent(*this, eventId);
 }
 
 void Game::lookAround() {
@@ -184,8 +152,7 @@ void Game::lookAround() {
 
     std::cout << "\n0. Back\n> ";
 
-    int choice;
-    std::cin >> choice;
+    int choice = ConsoleUI::ReadInt();
 
     if (choice == 0) return;
 
@@ -230,7 +197,7 @@ void Game::showActionsMenu() {
         break;
 
       case 3:
-        std::cout << "\nNobody to talk to.\n";
+        showTalkMenu();
         break;
 
       case 4:
@@ -260,8 +227,7 @@ void Game::moveToRoom() {
 
   std::cout << "\n0. Back\n> ";
 
-  int choice;
-  std::cin >> choice;
+  int choice = ConsoleUI::ReadInt();
 
   if (choice <= 0 || choice > static_cast<int>(connections.size())) return;
 
@@ -279,12 +245,123 @@ void Game::moveToRoom() {
   }
 }
 
+void Game::showTalkMenu() {
+  auto npcs = GameDatabase_Query::GetNpcsInRoom(database, currentRoomId);
+
+  if (npcs.empty()) {
+    std::cout << "\nNobody is here.\n";
+    return;
+  }
+
+  while (true) {
+    ConsoleUI::PrintHeader("Talk");
+
+    for (size_t i = 0; i < npcs.size(); i++) {
+      std::cout << i + 1 << ". " << npcs[i]->name << "\n";
+    }
+
+    std::cout << "\n0. Back\n> ";
+
+    int choice = ConsoleUI::ReadInt();
+
+    if (choice == 0) return;
+
+    if (choice < 1 || choice > static_cast<int>(npcs.size())) continue;
+
+    talkToNpc(npcs[choice - 1]->id);
+  }
+}
+
+void Game::talkToNpc(int npcId) {
+  const NpcRecord* npc = GameDatabase_Query::FindNpcById(database, npcId);
+
+  if (!npc) return;
+
+  while (true) {
+    ConsoleUI::PrintHeader(npc->name);
+
+    std::cout << npc->description << "\n";
+
+    std::cout << "\n1. Talk";
+    std::cout << "\n0. Back";
+    std::cout << "\n> ";
+
+    int choice = ConsoleUI::ReadInt();
+
+    if (choice == 0) return;
+
+    if (choice == 1) {
+      startDialogue(npc->firstDialogueNodeId);
+      return;
+    }
+  }
+}
+
+void Game::startDialogue(int nodeId) {
+  while (nodeId > 0) {
+    const DialogueNodeRecord* node =
+        GameDatabase_Query::FindDialogueNodeById(database, nodeId);
+
+    if (!node) return;
+
+    const NpcRecord* npc =
+        GameDatabase_Query::FindNpcById(database, node->npcId);
+
+    if (npc)
+      ConsoleUI::PrintHeader(npc->name);
+    else
+      ConsoleUI::PrintHeader("Dialogue");
+
+    std::cout << node->text << "\n";
+
+    auto allChoices = GameDatabase_Query::GetChoicesForNode(database, nodeId);
+
+    std::vector<const DialogueChoiceRecord*> choices;
+
+    for (const auto* choice : allChoices) {
+      if (choice->requiredEventId > 0 &&
+          !isEventCompleted(choice->requiredEventId))
+        continue;
+
+      if (choice->forbiddenEventId > 0 &&
+          isEventCompleted(choice->forbiddenEventId))
+        continue;
+
+      choices.push_back(choice);
+    }
+
+    if (choices.empty()) {
+      std::cout << "\n(Conversation ended)\n";
+      return;
+    }
+
+    std::cout << "\n";
+
+    for (size_t i = 0; i < choices.size(); i++) {
+      std::cout << i + 1 << ". " << choices[i]->text << "\n";
+    }
+
+    std::cout << "\n> ";
+
+    int choice = ConsoleUI::ReadInt();
+
+    if (choice < 1 || choice > static_cast<int>(choices.size())) continue;
+
+    const DialogueChoiceRecord* selected = choices[choice - 1];
+
+    if (selected->eventId > 0) {
+      triggerEvent(selected->eventId);
+    }
+
+    nodeId = selected->nextNodeId;
+  }
+}
+
 void Game::run() {
   while (running && hero.isAlive()) {
     showMainMenu();
 
-    int choice;
-    std::cin >> choice;
+    int choice = ConsoleUI::ReadInt();
 
     switch (choice) {
       case 1:
@@ -310,3 +387,17 @@ void Game::run() {
 
   std::cout << "\nGame finished.\n";
 }
+
+GameDatabase& Game::getDatabase() { return database; }
+
+Hero& Game::getHero() { return hero; }
+
+MonsterFactory& Game::getMonsterFactory() { return monsterFactory; }
+
+ItemFactory& Game::getItemFactory() { return itemFactory; }
+
+bool Game::isEventCompleted(int eventId) const {
+  return completedEvents.count(eventId) > 0;
+}
+
+void Game::completeEvent(int eventId) { completedEvents.insert(eventId); }

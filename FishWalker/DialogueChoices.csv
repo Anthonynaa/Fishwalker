@@ -1,0 +1,6 @@
+id;nodeId;text;nextNodeId;eventId;requiredEventId;forbiddenEventId
+1;1;What happened?;2;0;0;0
+2;1;Goodbye.;3;0;0;0
+3;2;I see.;1;0;0;0
+4;1;One of these things attacked me!;4;0;3;5
+5;4;Thank you.;1;5;0;0
