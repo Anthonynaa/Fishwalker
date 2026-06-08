@@ -6,6 +6,7 @@
 
 #include "EventDatabase.h"
 #include "NpcDatabase.h"
+#include "QuestDatabase.h"
 #include "RoomDatabase.h"
 #include "RoomObjectDatabase.h"
 
@@ -45,6 +46,8 @@ class GameDatabase {
   std::vector<DialogueChoiceRecord> dialogueChoices;
 
   std::vector<RoomNpcRecord> roomNpcs;
+
+  std::vector<QuestRecord> quests;
 };
 
 #endif

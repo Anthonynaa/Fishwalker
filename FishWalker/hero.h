@@ -27,6 +27,9 @@ class Hero : public Character {
   void setTempDamageMultiplier(int multiplier) { tempMultiplier = multiplier; }
   void resetTempDamageMultiplier() { tempMultiplier = 1; }
 
+  void setHp(int hp);
+  void setInf(int inf);
+
  private:
   Weapon* currentWeapon;
   Inventory inventory;

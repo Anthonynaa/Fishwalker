@@ -6,7 +6,7 @@
 enum class EventType {
   GIVE_ITEM,
   SPAWN_MONSTER,
-  START_QUEST,
+  ADD_QUEST,
   COMPLETE_QUEST,
   UNLOCK_NPC,
   OPEN_SHOP,

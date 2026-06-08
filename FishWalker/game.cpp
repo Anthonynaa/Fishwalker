@@ -7,6 +7,8 @@
 #include "EventSystem.h"
 #include "GameDatabase_Load.h"
 #include "GameDatabase_Query.h"
+#include "QuestSystem.h"
+#include "SaveLoadSystem.h"
 #include "battle.h"
 #include "constants.h"
 
@@ -27,6 +29,7 @@ Game::Game()
   GameDatabase_Load::LoadDialogueNodes(database, "DialogueNodes.csv");
   GameDatabase_Load::LoadDialogueChoices(database, "DialogueChoices.csv");
   GameDatabase_Load::LoadRoomNpcs(database, "RoomNpcs.csv");
+  GameDatabase_Load::LoadQuests(database, "Quests.csv");
 }
 
 Game::~Game() {}
@@ -50,7 +53,7 @@ void Game::showMainMenu() {
   std::cout << "\n1. Actions";
   std::cout << "\n2. Character";
   std::cout << "\n3. Inventory";
-  std::cout << "\n0. Exit";
+  std::cout << "\n4. System";
 
   std::cout << "\n\n> ";
 }
@@ -184,8 +187,8 @@ void Game::showCharacter() {
 
 void Game::showActionsMenu() {
   while (true) {
-    int choice = ConsoleUI::ShowMenu(
-        "Actions", {"Look Around", "Move", "Talk", "Interact"});
+    int choice = ConsoleUI::ShowMenu("Actions",
+                                     {"Look Around", "Move", "Talk", "Quests"});
 
     switch (choice) {
       case 1:
@@ -201,7 +204,7 @@ void Game::showActionsMenu() {
         break;
 
       case 4:
-        std::cout << "\nNothing to interact with.\n";
+        QuestSystem::ShowQuestLog(*this);
         break;
 
       case 0:
@@ -269,6 +272,36 @@ void Game::showTalkMenu() {
     if (choice < 1 || choice > static_cast<int>(npcs.size())) continue;
 
     talkToNpc(npcs[choice - 1]->id);
+  }
+}
+
+void Game::showSystemMenu() {
+  while (true) {
+    int choice =
+        ConsoleUI::ShowMenu("System", {"Save Game", "Load Game", "Exit Game"});
+
+    switch (choice) {
+      case 1:
+        if (SaveLoadSystem::SaveGame(*this, "save.txt"))
+          std::cout << "\nGame saved.\n";
+        else
+          std::cout << "\nFailed to save.\n";
+        break;
+
+      case 2:
+        if (SaveLoadSystem::LoadGame(*this, "save.txt"))
+          std::cout << "\nGame loaded.\n";
+        else
+          std::cout << "\nFailed to load.\n";
+        break;
+
+      case 3:
+        running = false;
+        return;
+
+      case 0:
+        return;
+    }
   }
 }
 
@@ -376,8 +409,8 @@ void Game::run() {
         showInventory();
         break;
 
-      case 0:
-        running = false;
+      case 4:
+        showSystemMenu();
         break;
 
       default:
@@ -401,3 +434,13 @@ bool Game::isEventCompleted(int eventId) const {
 }
 
 void Game::completeEvent(int eventId) { completedEvents.insert(eventId); }
+
+std::set<int>& Game::getActiveQuests() { return activeQuests; }
+
+std::set<int>& Game::getCompletedQuests() { return completedQuests; }
+
+int Game::getCurrentRoomId() const { return currentRoomId; }
+
+void Game::setCurrentRoomId(int roomId) { currentRoomId = roomId; }
+
+std::set<int>& Game::getCompletedEvents() { return completedEvents; }

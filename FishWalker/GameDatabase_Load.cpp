@@ -114,7 +114,7 @@ EventType ParseEventType(const std::string& str) {
 
   if (str == "SPAWN_MONSTER") return EventType::SPAWN_MONSTER;
 
-  if (str == "START_QUEST") return EventType::START_QUEST;
+  if (str == "ADD_QUEST") return EventType::ADD_QUEST;
 
   if (str == "COMPLETE_QUEST") return EventType::COMPLETE_QUEST;
 
@@ -280,6 +280,31 @@ bool GameDatabase_Load::LoadRoomNpcs(GameDatabase& db,
     roomNpc.npcId = std::stoi(row[1]);
 
     db.roomNpcs.push_back(roomNpc);
+  }
+
+  return true;
+}
+
+bool GameDatabase_Load::LoadQuests(GameDatabase& db,
+                                   const std::string& filename) {
+  auto data = CsvParser::parseFile(filename);
+
+  db.quests.clear();
+
+  if (data.size() <= 1) return false;
+
+  for (size_t i = 1; i < data.size(); i++) {
+    const auto& row = data[i];
+
+    if (row.size() < 3) continue;
+
+    QuestRecord quest;
+
+    quest.id = std::stoi(row[0]);
+    quest.title = row[1];
+    quest.description = row[2];
+
+    db.quests.push_back(quest);
   }
 
   return true;

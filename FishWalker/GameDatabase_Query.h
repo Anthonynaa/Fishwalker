@@ -59,6 +59,14 @@ inline const NpcRecord* FindNpcById(const GameDatabase& db, int id) {
   return FindById(db.npcs, id);
 }
 
+inline NpcRecord* FindNpcById(GameDatabase& db, int id) {
+  for (auto& npc : db.npcs) {
+    if (npc.id == id) return &npc;
+  }
+
+  return nullptr;
+}
+
 inline NpcRecord* FindNpcByIdMutable(GameDatabase& db, int id) {
   for (auto& npc : db.npcs)
     if (npc.id == id) return &npc;
@@ -101,6 +109,10 @@ inline std::vector<const NpcRecord*> GetNpcsInRoom(const GameDatabase& db,
   }
 
   return result;
+}
+
+inline const QuestRecord* FindQuestById(const GameDatabase& db, int id) {
+  return FindById(db.quests, id);
 }
 
 }  // namespace GameDatabase_Query

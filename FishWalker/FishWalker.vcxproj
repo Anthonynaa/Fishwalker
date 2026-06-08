@@ -150,6 +150,8 @@
     <ClCompile Include="infectedMonster.cpp" />
     <ClCompile Include="itemFactory.cpp" />
     <ClCompile Include="monsterFactory.cpp" />
+    <ClCompile Include="QuestSystem.cpp" />
+    <ClCompile Include="SaveLoadSystem.cpp" />
     <ClCompile Include="weapon.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hero.cpp" />
@@ -175,8 +177,11 @@
     <ClInclude Include="itemFactory.h" />
     <ClInclude Include="monsterFactory.h" />
     <ClInclude Include="NpcDatabase.h" />
+    <ClInclude Include="QuestDatabase.h" />
+    <ClInclude Include="QuestSystem.h" />
     <ClInclude Include="RoomDatabase.h" />
     <ClInclude Include="RoomObjectDatabase.h" />
+    <ClInclude Include="SaveLoadSystem.h" />
     <ClInclude Include="weapon.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="hero.h" />
@@ -191,6 +196,7 @@
     <None Include="Items.csv" />
     <None Include="Monsters.csv" />
     <None Include="Npcs.csv" />
+    <None Include="Quests.csv" />
     <None Include="RoomNpcs.csv" />
     <None Include="RoomObjects.csv" />
     <None Include="Rooms.csv" />

@@ -1,5 +1,6 @@
 #include "itemFactory.h"
 
-Item ItemFactory::createItem(const ItemRecord& data) const {
-  return Item(data.name, static_cast<ItemType>(data.type), data.value);
+Item ItemFactory::createItem(const ItemRecord& record) const {
+  return Item(record.id, record.name, static_cast<ItemType>(record.type),
+              record.value);
 }

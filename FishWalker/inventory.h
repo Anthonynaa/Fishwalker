@@ -14,6 +14,7 @@ class Inventory {
   void removeItem(int index);
   bool useItem(int index, Hero& hero);
   const std::vector<Item>& getItems() const { return items; }
+  void clear();
 
  private:
   std::vector<Item> items;

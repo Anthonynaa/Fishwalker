@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "GameDatabase_Query.h"
+#include "QuestSystem.h"
 #include "game.h"
 
 void EventSystem::ExecuteEvent(Game& game, int eventId) {
@@ -54,10 +55,12 @@ void EventSystem::ExecuteEvent(Game& game, int eventId) {
 
       break;
     }
-    case EventType::START_QUEST:
+    case EventType::ADD_QUEST:
+      QuestSystem::AddQuest(game, event->value);
       break;
 
     case EventType::COMPLETE_QUEST:
+      QuestSystem::CompleteQuest(game, event->value);
       break;
 
     case EventType::OPEN_SHOP:

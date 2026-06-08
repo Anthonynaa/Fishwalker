@@ -41,3 +41,5 @@ bool Inventory::useItem(int index, Hero& hero) {
       return false;
   }
 }
+
+void Inventory::clear() { items.clear(); }

@@ -31,6 +31,16 @@ class Game {
 
   void completeEvent(int eventId);
 
+  std::set<int>& getActiveQuests();
+
+  std::set<int>& getCompletedQuests();
+
+  int getCurrentRoomId() const;
+
+  void setCurrentRoomId(int roomId);
+
+  std::set<int>& getCompletedEvents();
+
  private:
   Hero hero;
 
@@ -61,6 +71,11 @@ class Game {
   void showTalkMenu();
   void startDialogue(int nodeId);
   void talkToNpc(int npcId);
+
+  void showSystemMenu();
+
+  std::set<int> activeQuests;
+  std::set<int> completedQuests;
 };
 
 #endif

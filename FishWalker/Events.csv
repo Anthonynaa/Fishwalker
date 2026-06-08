@@ -4,3 +4,5 @@ id;text;type;value;once
 3;The corpse comes to life and jumps at you!;SPAWN_MONSTER;2;1
 4;A merchant arrives.;UNLOCK_NPC;3;1
 5;The old man hands you a bottle of something.;GIVE_ITEM;1;1
+6;Quest accepted.;ADD_QUEST;1;1
+7;You helped the fisherman with his request.;COMPLETE_QUEST;1;1

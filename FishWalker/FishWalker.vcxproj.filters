@@ -79,6 +79,9 @@
     <Filter Include="Исходные файлы\Database\NpcDatabase">
       <UniqueIdentifier>{0d3d3186-58f8-42b0-9005-5a60db8d2279}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Database\QuestDatabase">
+      <UniqueIdentifier>{02a1b1cd-afe7-4d86-ae3d-15a7d7ad2129}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -133,6 +136,12 @@
       <Filter>Исходные файлы\Game</Filter>
     </ClCompile>
     <ClCompile Include="EventSystem.cpp">
+      <Filter>Исходные файлы\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestSystem.cpp">
+      <Filter>Исходные файлы\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadSystem.cpp">
       <Filter>Исходные файлы\Systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,6 +218,15 @@
     <ClInclude Include="NpcDatabase.h">
       <Filter>Исходные файлы\Database\NpcDatabase</Filter>
     </ClInclude>
+    <ClInclude Include="QuestDatabase.h">
+      <Filter>Исходные файлы\Database\QuestDatabase</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestSystem.h">
+      <Filter>Исходные файлы\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoadSystem.h">
+      <Filter>Исходные файлы\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Items.csv">
@@ -239,6 +257,9 @@
       <Filter>Исходные файлы\Data Tables</Filter>
     </None>
     <None Include="RoomNpcs.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="Quests.csv">
       <Filter>Исходные файлы\Data Tables</Filter>
     </None>
   </ItemGroup>

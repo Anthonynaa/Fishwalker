@@ -48,3 +48,7 @@ void Hero::applyDot() {
     takeDamage(damage);
   }
 }
+
+void Hero::setHp(int value) { hp = value; }
+
+void Hero::setInf(int value) { inf = value; }
