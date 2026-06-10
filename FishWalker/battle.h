@@ -12,18 +12,18 @@ class Battle {
   ~Battle();
 
   Hero& getHero();
-  Monster& getMonster();
-  Monster* getMonsterPtr() const;
-
   bool isBattleOver() const;
   int countAliveEnemies() const;
-  void heroAttack();
-  void heroAttackWithMultiplier(int multiplier);
+  void rodAttack();
+  void netAttack();
+  void heavyAttack();
+  void monstersAttack();
   bool isHeroAlive() const;
 
  private:
   Hero* hero;
   std::vector<Monster*> enemies;
+  Monster* selectTarget() const;
 };
 
 #endif

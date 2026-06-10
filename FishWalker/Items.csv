@@ -1,5 +1,13 @@
-id;name;type;value
-1;Health Potion;0;20
-2;Antidote;1;50
-3;Leather Armor;2;5
-4;Knife;3;15
+id;name;type;value;subType;slot
+1;Health Potion;0;20;0;0
+2;Antidote;3;50;0;0
+3;Leather Armor;2;5;0;1
+4;Knife;1;15;0;0
+5;Broken Rod;1;5;0;0
+6;Normal Rod;1;10;0;0
+7;Infected Rod;1;15;0;0
+8;Diving Boots;2;10;0;2
+9;Diving Suit;2;30;0;1
+10;Diving Helmet;2;50;0;0
+11;Fishing Net;1;7;1;1
+12;Harpoon;1;25;2;2

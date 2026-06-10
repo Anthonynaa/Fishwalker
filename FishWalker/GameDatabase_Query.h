@@ -115,6 +115,13 @@ inline const QuestRecord* FindQuestById(const GameDatabase& db, int id) {
   return FindById(db.quests, id);
 }
 
+inline const MonsterGroupRecord* FindMonsterGroupById(const GameDatabase& db,
+                                                      int id) {
+  for (const auto& group : db.monsterGroups)
+    if (group.id == id) return &group;
+  return nullptr;
+}
+
 }  // namespace GameDatabase_Query
 
 #endif

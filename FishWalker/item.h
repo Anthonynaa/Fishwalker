@@ -7,22 +7,23 @@ enum class ItemType { HEAL, WEAPON, ARMOR, ANTIDOTE };
 
 class Item {
  public:
-  Item(int id, const std::string& name, ItemType type, int value);
-
+  Item(int id, const std::string& name, ItemType type, int value, int subType,
+       int slot);
   int getId() const;
-
   const std::string& getName() const;
   ItemType getType() const;
   int getValue() const;
-
+  int getSubType() const;
+  int getSlot() const;
   std::string getDescription() const;
 
  private:
   int id;
-
   std::string name;
   ItemType type;
   int value;
+  int subType;
+  int slot;
 };
 
 #endif

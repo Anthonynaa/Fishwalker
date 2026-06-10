@@ -54,9 +54,10 @@ class Game {
   int currentRoomId;
 
   void showMainMenu();
-  void showInventory();
+  void showInventory(bool inBattle = false);
 
   void startBattle(Monster* monster);
+  void startBattle(std::vector<Monster*> monsters);
 
   void triggerEvent(int eventId);
 
