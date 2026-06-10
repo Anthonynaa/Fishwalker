@@ -29,6 +29,8 @@ bool LoadRoomNpcs(GameDatabase& db, const std::string& filename);
 
 bool LoadQuests(GameDatabase& db, const std::string& filename);
 
+bool LoadMonsterGroups(GameDatabase& db, const std::string& filename);
+
 }  // namespace GameDatabase_Load
 
 #endif

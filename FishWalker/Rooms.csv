@@ -1,4 +1,7 @@
 id;title;description;enterEventId
-1;Beach;A quiet beach stretches before you.;1
-2;Old Pier;The wooden boards creak beneath your feet.;0
-3;Shipwreck;A wrecked ship lies half-buried in the sand.;0
+1;Fisherman's Path;A narrow path leading to a small hut. The sea breeze is fresh.;0
+2;Fisherman's Hut;A modest wooden hut. An old fisherman sits on a chair.;103
+3;Lake;A calm lake. A dead end. Nothing moves here.;0
+4;Road to Village;The path widens, leading towards the village.;106
+5;Village;An abandoned village. Two fishwalkers lurk.;0
+6;Village Gate;A rusty gate blocks the way. You can hear noises from inside the village.;105

@@ -6,26 +6,20 @@
 bool GameDatabase_Load::LoadItems(GameDatabase& db,
                                   const std::string& filename) {
   auto data = CsvParser::parseFile(filename);
-
   db.items.clear();
-
   if (data.size() <= 1) return false;
-
   for (size_t i = 1; i < data.size(); ++i) {
     const auto& row = data[i];
-
-    if (row.size() < 4) continue;
-
+    if (row.size() < 6) continue;
     ItemRecord item;
-
     item.id = std::stoi(row[0]);
     item.name = row[1];
     item.type = std::stoi(row[2]);
     item.value = std::stoi(row[3]);
-
+    item.subType = std::stoi(row[4]);
+    item.slot = std::stoi(row[5]);
     db.items.push_back(item);
   }
-
   return true;
 }
 
@@ -62,25 +56,18 @@ bool GameDatabase_Load::LoadMonsters(GameDatabase& db,
 bool GameDatabase_Load::LoadRooms(GameDatabase& db,
                                   const std::string& filename) {
   auto data = CsvParser::parseFile(filename);
-
   db.rooms.clear();
-
   if (data.size() <= 1) return false;
-
   for (size_t i = 1; i < data.size(); ++i) {
     const auto& row = data[i];
-
-    if (row.size() < 3) continue;
-
+    if (row.size() < 4) continue;
     RoomRecord room;
-
     room.id = std::stoi(row[0]);
     room.title = row[1];
     room.description = row[2];
-
+    room.enterEventId = std::stoi(row[3]);
     db.rooms.push_back(room);
   }
-
   return true;
 }
 
@@ -121,6 +108,8 @@ EventType ParseEventType(const std::string& str) {
   if (str == "UNLOCK_NPC") return EventType::UNLOCK_NPC;
 
   if (str == "OPEN_SHOP") return EventType::OPEN_SHOP;
+
+  if (str == "SPAWN_MONSTER_GROUP") return EventType::SPAWN_MONSTER_GROUP;
 
   return EventType::NONE;
 }
@@ -307,5 +296,31 @@ bool GameDatabase_Load::LoadQuests(GameDatabase& db,
     db.quests.push_back(quest);
   }
 
+  return true;
+}
+
+bool GameDatabase_Load::LoadMonsterGroups(GameDatabase& db,
+                                          const std::string& filename) {
+  auto data = CsvParser::parseFile(filename);
+  db.monsterGroups.clear();
+  if (data.size() <= 1) return false;
+  for (size_t i = 1; i < data.size(); ++i) {
+    const auto& row = data[i];
+    if (row.size() < 3) continue;
+    int groupId = std::stoi(row[0]);
+    int monsterId = std::stoi(row[1]);
+    int count = std::stoi(row[2]);
+    auto it = std::find_if(
+        db.monsterGroups.begin(), db.monsterGroups.end(),
+        [groupId](const MonsterGroupRecord& g) { return g.id == groupId; });
+    if (it == db.monsterGroups.end()) {
+      MonsterGroupRecord newGroup;
+      newGroup.id = groupId;
+      newGroup.monsters.push_back({monsterId, count});
+      db.monsterGroups.push_back(newGroup);
+    } else {
+      it->monsters.push_back({monsterId, count});
+    }
+  }
   return true;
 }

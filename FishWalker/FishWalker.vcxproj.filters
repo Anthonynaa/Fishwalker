@@ -82,6 +82,9 @@
     <Filter Include="Исходные файлы\Database\QuestDatabase">
       <UniqueIdentifier>{02a1b1cd-afe7-4d86-ae3d-15a7d7ad2129}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\AimMiniGame">
+      <UniqueIdentifier>{95d89e4b-d350-45a4-a07b-b361d9ef6ec7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="SaveLoadSystem.cpp">
       <Filter>Исходные файлы\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="aimMiniGame.cpp">
+      <Filter>Исходные файлы\AimMiniGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +233,9 @@
     <ClInclude Include="SaveLoadSystem.h">
       <Filter>Исходные файлы\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="aimMiniGame.h">
+      <Filter>Исходные файлы\AimMiniGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Items.csv">
@@ -260,6 +269,9 @@
       <Filter>Исходные файлы\Data Tables</Filter>
     </None>
     <None Include="Quests.csv">
+      <Filter>Исходные файлы\Data Tables</Filter>
+    </None>
+    <None Include="MonsterGroups.csv">
       <Filter>Исходные файлы\Data Tables</Filter>
     </None>
   </ItemGroup>

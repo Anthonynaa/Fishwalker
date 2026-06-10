@@ -24,12 +24,13 @@ class Character {
   virtual void attack(Character& target) = 0;
   void updateInfectionEffects();
 
- protected:
   void setHp(int newHp);
   void setMaxHp(int newMaxHp);
   void setAtk(int newAtk);
   void setInf(int newInf);
+  void addMaxHp(int bonus);
 
+ protected:
   std::string name;
   int id;
   int hp, maxHp, atk, inf;

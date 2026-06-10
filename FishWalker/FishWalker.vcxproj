@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="aimMiniGame.cpp" />
     <ClCompile Include="armor.cpp" />
     <ClCompile Include="battle.cpp" />
     <ClCompile Include="character.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="monster.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aimMiniGame.h" />
     <ClInclude Include="armor.h" />
     <ClInclude Include="battle.h" />
     <ClInclude Include="character.h" />
@@ -194,6 +196,7 @@
     <None Include="DialogueNodes.csv" />
     <None Include="Events.csv" />
     <None Include="Items.csv" />
+    <None Include="MonsterGroups.csv" />
     <None Include="Monsters.csv" />
     <None Include="Npcs.csv" />
     <None Include="Quests.csv" />

@@ -1,5 +1,11 @@
 roomId;targetRoomId;choiceText
-1;2;Walk to the pier
-2;1;Return to the beach
-2;3;Enter the ship
-3;2;Leave the ship
+1;2;Enter the fisherman's hut
+2;1;Go back to the path
+2;3;Go to the lake
+3;2;Return to the hut
+2;4;Go to the road to the village
+4;2;Return to the fisherman's hut
+4;6;Go through the gate
+6;4;Return to the road
+6;5;Enter the village
+5;6;Go back to the gate

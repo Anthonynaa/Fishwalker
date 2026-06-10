@@ -68,3 +68,10 @@ void Character::updateInfectionEffects() {
     if (atk < 0) atk = 0;
   }
 }
+
+void Character::addMaxHp(int bonus) {
+  setMaxHp(maxHp + bonus);
+  if (bonus > 0) {
+    heal(bonus);
+  }
+}

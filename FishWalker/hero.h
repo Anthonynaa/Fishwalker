@@ -20,21 +20,40 @@ class Hero : public Character {
 
   void takeDamage(int amount) override;
   void attack(Character& target) override;
-  void equipWeapon(Weapon* newWeapon);
-  void equipArmor(Armor* newArmor);
+  void equipWeapon(Weapon* weapon, int slot);
+  void equipArmor(Armor* armor, int slot);
+  void clearWeaponSlot(int slot);
+  void clearArmorSlot(int slot);
+  Weapon* getWeaponInSlot(int slot) const;
+  Armor* getArmorInSlot(int slot) const;
+  bool isWeaponSlotEmpty(int slot) const;
+  bool isArmorSlotEmpty(int slot) const;
   void applyDot();
 
-  void setTempDamageMultiplier(int multiplier) { tempMultiplier = multiplier; }
-  void resetTempDamageMultiplier() { tempMultiplier = 1; }
+  void setDamagePercent(int percent) { damagePercent = percent; }
+  void resetDamagePercent() { damagePercent = 100; }
 
   void setHp(int hp);
   void setInf(int inf);
 
+  int getArmorPieces() const { return armorPieces; }
+  void addArmorPiece();
+
+  int getHeavyCooldown() const { return heavyCooldown; }
+  void setHeavyCooldown(int cd) { heavyCooldown = cd; }
+  void decrementCooldown() {
+    if (heavyCooldown > 0) heavyCooldown--;
+  }
+
+  bool hasWeaponSubType(int subType) const;
+
  private:
-  Weapon* currentWeapon;
+  Weapon* weaponSlots[3];
+  Armor* armorSlots[3];
   Inventory inventory;
-  Armor* currentArmor;
-  int tempMultiplier = 1;
+  int damagePercent = 100;
+  int armorPieces = 0;
+  int heavyCooldown = 0;
 };
 
 #endif
