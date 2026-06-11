@@ -1,4 +1,4 @@
 id;name;hp;maxHp;atk;inf;type;infectionPower
 1;Normal Fishwalker;20;20;10;0;0;0
 2;Infected Fishwalker;30;30;15;0;1;20
-3;Deep One;200;200;25;0;0;0
+3;Deep One;200;200;50;15;0;15

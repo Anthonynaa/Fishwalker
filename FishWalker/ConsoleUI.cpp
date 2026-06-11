@@ -38,3 +38,38 @@ int ConsoleUI::ReadInt() {
   }
   return value;
 }
+
+void ConsoleUI::ShowVictoryScreen() {
+  system("cls");
+
+  std::cout << "\n";
+  std::cout << "========================================\n";
+  std::cout << "              CONGRATULATIONS\n";
+  std::cout << "========================================\n\n";
+
+  std::cout << "The source of the infection has been defeated.\n";
+  std::cout << "The fate of the coast is now in your hands.\n\n";
+
+  std::cout << "Thank you for playing Fishwalker!\n";
+
+  std::cout << "\n========================================\n";
+  std::cout << "\nPress Enter to exit...";
+}
+
+int ConsoleUI::ShowStartMenu() {
+  system("cls");
+
+  std::cout << "========================================\n";
+  std::cout << "              FISHWALKER\n";
+  std::cout << "========================================\n";
+  std::cout << "Text-RPG by Roman Sisoev and Anton Novikov\n";
+  std::cout << "\n";
+  std::cout << "1. Start Game\n";
+  std::cout << "0. Exit\n";
+  std::cout << "\n> ";
+
+  int choice;
+  std::cin >> choice;
+
+  return choice;
+}

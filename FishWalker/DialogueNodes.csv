@@ -1,9 +1,9 @@
 id;npcId;text
 1;1;The sea wasn't always like this.
-2;1;Too many things changed after the infection. Fishwalkers have appeared near the docks.
+2;1;Too many things changed after the infection. Fishwalkers have appeared near the docks. I, uh, haven't been to that old place in a while, but... Now they're coming here, too.
 3;1;Take care out there.
-4;1;I figured as much. 'Tis safer 'round here now. Here, take this.
-5;1;I heard some noises coming from the sunken ship. Can ya check it for me?
+4;1;Yep... Thanks... Leave the rest to yourself. It'll patch me right up. Pick up all of these things you see, if 'yer don't wanna become fish food, heh. I just need a little rest...
+5;1;While runnin' back home 'ere, I met one fish folk on the path. Grazed me, 'is all, but... Hey, lad, can ya fetch me this herb decoction? *He pointed at something on the table.*
 6;3;Using diving equipment enhances your super attack. Each piece you find increases the number of crosses and the speed of the aiming game. Find all three!
 7;3;Good luck, young fisherman.
 8;4;The fishwalkers are terrorizing us. If you kill 10 of them, I will reward you.
@@ -18,3 +18,4 @@ id;npcId;text
 17;6;Help me! I've seen monsters. Kill 15 of them and I'll reward you.
 18;6;You did it! Here's a helmet.
 19;6;You've killed some monsters. Need 15.
+20;1;You're not from around here, are ya? *The man chuckled from sheer cruel irony, his laugh loud and piercing.* Tell ya what, kid. You don't wanna go there, and you definitely don't wanna get attacked by one. Run back where ya came from while you can.

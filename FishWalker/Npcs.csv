@@ -1,5 +1,5 @@
 id;name;description;roomId;firstDialogueNodeId;enabled
-1;Old Fisherman;A tired fisherman.;2;11;1
+1;Old Fisherman;A tired fisherman in his late fifties. He was missing a leg, sitting at the slanted chair and staring at the floor. Tired.;2;1;1
 2;Merchant;A travelling merchant.;1;2;0
 3;Old Diver;An experienced diver who knows secrets of the deep.;5;6;1
 4;Dying Villager;A pale, sick resident lying on the ground.;5;14;1

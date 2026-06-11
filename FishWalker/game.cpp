@@ -177,7 +177,18 @@ void Game::startBattle(std::vector<Monster*> monsters) {
       std::cout << "\n================================\n";
       std::cout << "         BOSS DEFEATED!          \n";
       std::cout << "================================\n";
+
       ConsoleUI::Pause();
+
+      triggerEvent(411);
+
+      ConsoleUI::ShowVictoryScreen();
+
+      std::cin.ignore(10000, '\n');
+      std::cin.get();
+
+      running = false;
+      return;
     }
   } else {
     system("cls");
@@ -193,6 +204,7 @@ void Game::startBattle(std::vector<Monster*> monsters) {
 
 void Game::triggerEvent(int eventId) {
   EventSystem::ExecuteEvent(*this, eventId);
+  ConsoleUI::Pause();
 }
 
 void Game::lookAround() {
@@ -490,6 +502,15 @@ void Game::startDialogue(int nodeId) {
 }
 
 void Game::run() {
+  while (true) {
+    int choice = ConsoleUI::ShowStartMenu();
+
+    if (choice == 1) triggerEvent(1);
+    break;
+
+    if (choice == 0) return;
+  }
+
   while (running && hero.isAlive()) {
     showMainMenu();
     int choice = ConsoleUI::ReadInt();

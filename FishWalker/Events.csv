@@ -1,4 +1,8 @@
 id;text;type;value;once
+1;It was foggy today. You were stranding, lost after the rapture of your home village. It has been 2 years since the first village feel to the creatures from the water, and now it seems it have reached your home, too. An elder told you to never come back, or else you'll share their fate... You seeked the shore to find someone still alive. Your legs have brought you on a different path...;NONE;0;1
+4;You helped the Old Fisherman.;COMPLETE_QUEST;1;1
+5;*As you turned around, you heard the old man cough heavily.* I'm... I don't think it'll help... The infection, it's grown too much in me already. Listen, lad, you're might just be the only one to do this. Find the cave underwater east of the pier... The Deep One there is the source of the walkers... Please.;ADD_QUEST;3;1
+6;You decided to comply with the old man.;ADD_QUEST;1;1
 107;A deep one rises from the depths!;SPAWN_MONSTER;3;1
 201;You received a Normal Rod.;GIVE_ITEM;2;1
 207;You received a Pot Net.;GIVE_ITEM;6;1
@@ -33,3 +37,4 @@ id;text;type;value;once
 405;You received a Diving Helmet.;GIVE_ITEM;12;1
 406;You found Diving Boots.;GIVE_ITEM;10;1
 410;You found an Ahan Net.;GIVE_ITEM;7;1
+411;You stand before the fallen beast, hands still trembling. It is dead. The infection will perish once all the monsters who have it will wither, and the village may see the light one day. Because of you...;COMPLETE_QUEST;3;1

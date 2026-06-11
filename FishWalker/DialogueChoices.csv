@@ -2,10 +2,10 @@ id;nodeId;text;nextNodeId;eventId;requiredEventId;forbiddenEventId
 1;1;What happened?;2;0;0;0
 2;1;Goodbye.;3;0;0;0
 3;2;I see.;1;0;0;0
-4;1;I located the source of the noise. One of these things attacked me!;4;7;3;5
-5;4;Thank you.;1;5;0;0
+4;1;Is this what you need?;4;4;6;4
+5;4;You're welcome.;1;5;0;0
 6;1;Do you need any help?;5;0;0;6
-7;5;I'll see what I can do.;1;6;0;0
+7;5;Let me see...;1;6;0;0
 8;6;Thank you for the advice.;7;0;0;0
 9;8;I accept the challenge.;9;0;0;0
 10;8;Not interested.;0;0;0;0
@@ -17,3 +17,4 @@ id;nodeId;text;nextNodeId;eventId;requiredEventId;forbiddenEventId
 16;14;I don't have one.;16;0;0;0
 17;17;I accept the quest.;18;0;0;0
 18;17;Not now.;0;0;0;0
+19;2;Fishwalkers?;20;0;0;0

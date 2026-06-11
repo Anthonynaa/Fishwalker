@@ -1,2 +1,4 @@
-﻿  GameDatabase_Load.cpp
+﻿  game.cpp
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(444,44): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\game.cpp(466,44): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
   FishWalker.vcxproj -> C:\Personal Files\Uni\GitHub\Fishwalker\FishWalker\x64\Debug\FishWalker.exe

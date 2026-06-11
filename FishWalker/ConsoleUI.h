@@ -14,6 +14,10 @@ class ConsoleUI {
   static void Pause();
 
   static int ReadInt();
+
+  static void ShowVictoryScreen();
+
+  static int ShowStartMenu();
 };
 
 #endif
