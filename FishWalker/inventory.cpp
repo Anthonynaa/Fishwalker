@@ -71,7 +71,8 @@ bool Inventory::useItem(int index, Hero& hero, GameDatabase& db,
 
       Weapon* newWeapon =
           new Weapon(item.getName(), item.getValue(), (int)item.getType(),
-                     item.getSubType(), item.getId());
+                     item.getSubType(), item.getId(), item.getCritChance(),
+                     item.getSpecialType(), item.getSpecialValue());
       hero.equipWeapon(newWeapon, slot);
       std::cout << "\nEquipped " << item.getName() << " in weapon slot " << slot
                 << ".\n";
@@ -88,6 +89,8 @@ bool Inventory::useItem(int index, Hero& hero, GameDatabase& db,
         std::cout << "\nCannot change armor during battle! Slot is occupied.\n";
         return false;
       }
+
+      hero.addArmorPiece();
 
       Armor* oldArmor = hero.getArmorInSlot(slot);
       if (oldArmor) {

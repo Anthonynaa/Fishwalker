@@ -47,6 +47,9 @@ class Hero : public Character {
 
   bool hasWeaponSubType(int subType) const;
 
+  int getMonstersKilled() const { return monstersKilled; }
+  void addMonsterKill(int count = 1) { monstersKilled += count; }
+
  private:
   Weapon* weaponSlots[3];
   Armor* armorSlots[3];
@@ -54,6 +57,7 @@ class Hero : public Character {
   int damagePercent = 100;
   int armorPieces = 0;
   int heavyCooldown = 0;
+  int monstersKilled = 0;
 };
 
 #endif

@@ -12,7 +12,7 @@ bool GameDatabase_Load::LoadItems(GameDatabase& db,
   if (data.size() <= 1) return false;
   for (size_t i = 1; i < data.size(); ++i) {
     const auto& row = data[i];
-    if (row.size() < 6) continue;
+    if (row.size() < 9) continue;
     ItemRecord item;
     item.id = std::stoi(row[0]);
     item.name = row[1];
@@ -20,6 +20,9 @@ bool GameDatabase_Load::LoadItems(GameDatabase& db,
     item.value = std::stoi(row[3]);
     item.subType = std::stoi(row[4]);
     item.slot = std::stoi(row[5]);
+    item.critChance = std::stoi(row[6]);
+    item.specialType = std::stoi(row[7]);
+    item.specialValue = std::stoi(row[8]);
     db.items.push_back(item);
   }
   return true;

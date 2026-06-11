@@ -1,7 +1,29 @@
 id;title;description;enterEventId
 1;Fisherman's Path;A narrow path leading to a small hut. The sea breeze is fresh.;0
-2;Fisherman's Hut;A modest wooden hut. An old fisherman sits on a chair.;103
-3;Lake;A calm lake. A dead end. Nothing moves here.;0
-4;Road to Village;The path widens, leading towards the village.;106
-5;Village;An abandoned village. Two fishwalkers lurk.;0
-6;Village Gate;A rusty gate blocks the way. You can hear noises from inside the village.;105
+2;Fisherman's Hut;A modest wooden hut. An old fisherman sits on a chair.;0
+3;Small Lake;A calm lake. A dead end. Nothing moves here.;0
+4;Main Road to Village;The path widens, leading towards the village.;0
+5;Village;An abandoned village.;0
+6;Village Gate;A rusty gate blocks the way. You can hear noises from inside.;0
+7;Old Well;An old stone well.;0
+8;Mill;A windmill with broken blades.;0
+9;Church;A small stone church with stained glass.;0
+10;Smithy;A blacksmith's workshop with a forge and anvil.;0
+11;Tavern;A common room with long tables.;0
+12;Road to Pier;A road leading to the pier, surrounded by bushes.;0
+13;East Road;A dusty road going east.;0
+14;Cliff Edge;A cliff edge with a view of the sea.;0
+15;Rocky Descent;A steep descent over rocks to the shore.;0
+16;Shoreline;A narrow strip of sand between the sea and rocks.;0
+17;Forgotten Crypt;A gloomy crypt with stone sarcophagi.;0
+18;Church Crypt;A flooded crypt beneath the church.;0
+19;Pier Entrance;A wooden deck beginning from the road.;0
+20;Pier;A long wooden pier stretching into the sea.;0
+21;Passage to Shore;A narrow passage between rocks leading to the shore.;0
+22;Shore;A wide sandy beach, waves wash ashore.;0
+23;Broken Boat;The wreck of a small fishing boat broken against rocks.;0
+24;Wrecked Schooner;The remains of a large schooner sticking out of the water.;0
+25;Sea;Open sea, dark water.;0
+26;Boss Entrance;An underwater crevice leading to the lair.;0
+27;Sunken Cave;A submerged cave with stalactites.;0
+28;Boss Fight;The lair of the giant sea monster.;107

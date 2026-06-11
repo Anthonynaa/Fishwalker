@@ -9,10 +9,10 @@
 #include <iostream>
 #include <vector>
 
-#include "ConsoleUI.h"
 #include "constants.h"
 
 const int CELL_SIZE = 3;
+const int FIXED_CELLS_COUNT = 16;
 const int MAX_CYCLES = 5;
 const int BASE_MOVE_INTERVAL_MS = 100;
 const int LOOP_DELAY_MS = 20;
@@ -116,8 +116,9 @@ int AimMiniGame::Run(int crossesCount, int speedBonusPercent) {
   int screenWidth = csbi.dwSize.X;
 
   int maxCells = (screenWidth + 1) / (CELL_SIZE + 3);
-  if (maxCells < 1) maxCells = 1;
-  int cellsCount = maxCells;
+  int cellsCount = FIXED_CELLS_COUNT;
+  if (cellsCount > maxCells) cellsCount = maxCells;
+  if (cellsCount < 1) cellsCount = 1;
 
   crossesCount = (crossesCount < 1)
                      ? 1
@@ -156,7 +157,7 @@ int AimMiniGame::Run(int crossesCount, int speedBonusPercent) {
     }
 
     if (_kbhit()) {
-      ConsoleUI::Pause();
+      _getch();
       if (isTargetCell[currentPos]) {
         isTargetCell[currentPos] = false;
         collected++;

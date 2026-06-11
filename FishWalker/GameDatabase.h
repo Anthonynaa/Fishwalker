@@ -17,6 +17,9 @@ struct ItemRecord {
   int value;
   int subType;
   int slot;
+  int critChance;
+  int specialType;
+  int specialValue;
 };
 
 struct MonsterRecord {

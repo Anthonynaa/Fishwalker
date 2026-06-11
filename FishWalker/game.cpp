@@ -46,20 +46,13 @@ void Game::showMainMenu() {
 
   const RoomRecord* room =
       GameDatabase_Query::FindRoomById(database, currentRoomId);
-
   if (room) {
     std::cout << "\nLocation: " << room->title << "\n";
   }
 
   std::cout << "\nHP: " << hero.getHp() << "/" << hero.getMaxHp();
   std::cout << "\nINF: " << hero.getInf() << "/100\n";
-
-  std::cout << "\n1. Actions";
-  std::cout << "\n2. Character";
-  std::cout << "\n3. Inventory";
-  std::cout << "\n4. System";
-
-  std::cout << "\n\n> ";
+  std::cout << "\n1. Actions\n2. Character\n3. Inventory\n4. System\n\n> ";
 }
 
 void Game::showInventory(bool inBattle) {
@@ -74,9 +67,7 @@ void Game::showInventory(bool inBattle) {
       std::cout << i + 1 << ". " << items[i].getName()
                 << items[i].getDescription() << "\n";
     }
-    std::cout << "\n0. Back\n";
-    std::cout << "> ";
-
+    std::cout << "\n0. Back\n> ";
     int choice = ConsoleUI::ReadInt();
     if (choice > 0 && choice <= static_cast<int>(items.size())) {
       hero.getInventory().useItem(choice - 1, hero, database, inBattle);
@@ -109,11 +100,14 @@ void Game::startBattle(std::vector<Monster*> monsters) {
       for (auto* m : monsters) {
         if (m->isAlive()) {
           std::cout << m->getName() << " HP " << m->getHp() << "/"
-                    << m->getMaxHp() << "\n";
+                    << m->getMaxHp();
+          std::string status = m->getStatusString();
+          if (!status.empty()) std::cout << " " << status;
+          std::cout << "\n";
         }
       }
       std::cout << "\nActions remaining: " << actionsLeft;
-      std::cout << "\n1. Rod attack\n2. Net attack (splash)\n3. Heavy weapon";
+      std::cout << "\n1. Attack\n2. Net attack (splash)\n3. Heavy weapon";
       if (hero.getHeavyCooldown() > 0) {
         std::cout << " (cooldown: " << hero.getHeavyCooldown() << ")";
       }
@@ -122,7 +116,7 @@ void Game::startBattle(std::vector<Monster*> monsters) {
       int choice = ConsoleUI::ReadInt();
       switch (choice) {
         case 1:
-          battle.rodAttack();
+          battle.basicAttack();
           hero.applyDot();
           actionsLeft--;
           break;
@@ -142,9 +136,10 @@ void Game::startBattle(std::vector<Monster*> monsters) {
                          "Heavy attack!\n";
             ConsoleUI::Pause();
           } else {
+            int oldCd = hero.getHeavyCooldown();
             battle.heavyAttack();
             hero.applyDot();
-            if (hero.getHeavyCooldown() == 0) actionsLeft--;
+            if (oldCd == 0) actionsLeft--;
           }
           break;
         case 4:
@@ -155,17 +150,43 @@ void Game::startBattle(std::vector<Monster*> monsters) {
     }
     if (battle.isBattleOver()) break;
     battle.monstersAttack();
+    for (auto* m : monsters) {
+      if (m->isAlive()) m->updateStatuses();
+    }
     hero.decrementCooldown();
     hero.applyDot();
     ConsoleUI::Pause();
   }
 
-  if (hero.isAlive())
-    std::cout << "\nVictory!\n";
-  else
-    std::cout << "\nYou died!\n";
+  int killedThisBattle = 0;
+  for (auto* m : monsters) {
+    if (!m->isAlive()) killedThisBattle++;
+  }
+  hero.addMonsterKill(killedThisBattle);
 
-  ConsoleUI::Pause();
+  if (hero.isAlive()) {
+    bool bossDefeated = false;
+    for (auto* m : monsters) {
+      if (m->getId() == 3 && !m->isAlive()) {
+        bossDefeated = true;
+        break;
+      }
+    }
+    if (bossDefeated) {
+      system("cls");
+      std::cout << "\n================================\n";
+      std::cout << "         BOSS DEFEATED!          \n";
+      std::cout << "================================\n";
+      ConsoleUI::Pause();
+    }
+  } else {
+    system("cls");
+    std::cout << "\n================================\n";
+    std::cout << "            GAME OVER            \n";
+    std::cout << "================================\n";
+    ConsoleUI::Pause();
+    running = false;
+  }
 
   for (auto* m : monsters) delete m;
 }
@@ -177,7 +198,6 @@ void Game::triggerEvent(int eventId) {
 void Game::lookAround() {
   const RoomRecord* room =
       GameDatabase_Query::FindRoomById(database, currentRoomId);
-
   if (!room) return;
 
   while (true) {
@@ -186,12 +206,9 @@ void Game::lookAround() {
 
     auto objects =
         GameDatabase_Query::GetObjectsInRoom(database, currentRoomId);
-
     if (objects.empty()) {
       std::cout << "\nNothing interesting here.\n";
-
       ConsoleUI::Pause();
-
       return;
     }
 
@@ -200,7 +217,6 @@ void Game::lookAround() {
       std::cout << i + 1 << ". " << objects[i]->name << "\n";
     }
     std::cout << "\n0. Back\n> ";
-
     int choice = ConsoleUI::ReadInt();
     if (choice == 0) return;
     if (choice < 1 || choice > static_cast<int>(objects.size())) continue;
@@ -221,6 +237,7 @@ void Game::showCharacter() {
   std::cout << "ATK: " << hero.getAtk() << "\n";
   std::cout << "INF: " << hero.getInf() << "/100\n";
   std::cout << "Armor Pieces collected: " << hero.getArmorPieces() << "/3\n";
+  std::cout << "Monsters killed: " << hero.getMonstersKilled() << "\n";
 
   std::cout << "\n--- Armor Slots ---\n";
   const char* armorSlotNames[] = {"Head", "Chest", "Legs"};
@@ -245,7 +262,6 @@ void Game::showCharacter() {
       std::cout << "empty";
     std::cout << "\n";
   }
-
   ConsoleUI::Pause();
 }
 
@@ -275,12 +291,9 @@ void Game::showActionsMenu() {
 void Game::moveToRoom() {
   auto connections =
       GameDatabase_Query::GetConnectionsFromRoom(database, currentRoomId);
-
   if (connections.empty()) {
     std::cout << "\nThere's nowhere to go.\n";
-
     ConsoleUI::Pause();
-
     return;
   }
 
@@ -289,12 +302,10 @@ void Game::moveToRoom() {
     std::cout << i + 1 << ". " << connections[i]->choiceText << "\n";
   }
   std::cout << "\n0. Back\n> ";
-
   int choice = ConsoleUI::ReadInt();
   if (choice <= 0 || choice > static_cast<int>(connections.size())) return;
 
   currentRoomId = connections[choice - 1]->targetRoomId;
-
   const RoomRecord* room =
       GameDatabase_Query::FindRoomById(database, currentRoomId);
   if (!room) return;
@@ -309,9 +320,7 @@ void Game::showTalkMenu() {
   auto npcs = GameDatabase_Query::GetNpcsInRoom(database, currentRoomId);
   if (npcs.empty()) {
     std::cout << "\nNobody is here.\n";
-
     ConsoleUI::Pause();
-
     return;
   }
 
@@ -400,6 +409,7 @@ void Game::startDialogue(int nodeId) {
 
     if (choices.empty()) {
       std::cout << "\n(Conversation ended)\n";
+      ConsoleUI::Pause();
       return;
     }
 
@@ -408,15 +418,74 @@ void Game::startDialogue(int nodeId) {
       std::cout << i + 1 << ". " << choices[i]->text << "\n";
     }
     std::cout << "\n> ";
-
     int choice = ConsoleUI::ReadInt();
     if (choice < 1 || choice > static_cast<int>(choices.size())) continue;
 
     const DialogueChoiceRecord* selected = choices[choice - 1];
+
+    if (nodeId == 11) {
+      if (selected->text == "I have a Herbal Decoction.") {
+        bool hasItem = false;
+        const auto& items = hero.getInventory().getItems();
+        for (size_t i = 0; i < items.size(); ++i) {
+          if (items[i].getId() == 13) {
+            hero.getInventory().removeItem(i);
+            hasItem = true;
+            break;
+          }
+        }
+        if (hasItem) {
+          triggerEvent(201);
+          triggerEvent(207);
+          std::cout << "\nYou received: Normal Rod and Pot Net!\n";
+          nodeId = 12;
+        } else {
+          nodeId = 13;
+        }
+      } else {
+        nodeId = selected->nextNodeId;
+      }
+    } else if (nodeId == 14) {
+      if (selected->text == "I have an antidote.") {
+        bool hasItem = false;
+        const auto& items = hero.getInventory().getItems();
+        for (size_t i = 0; i < items.size(); ++i) {
+          if (items[i].getId() == 14) {
+            hero.getInventory().removeItem(i);
+            hasItem = true;
+            break;
+          }
+        }
+        if (hasItem) {
+          triggerEvent(404);
+          std::cout << "\nYou received: Diving Suit!\n";
+          nodeId = 15;
+        } else {
+          nodeId = 16;
+        }
+      } else {
+        nodeId = selected->nextNodeId;
+      }
+    } else if (nodeId == 17) {
+      if (selected->text == "I accept the quest.") {
+        int killed = hero.getMonstersKilled();
+        if (killed >= 15) {
+          triggerEvent(405);
+          std::cout << "\nYou received: Diving Helmet!\n";
+          nodeId = 18;
+        } else {
+          nodeId = 19;
+        }
+      } else {
+        nodeId = selected->nextNodeId;
+      }
+    } else {
+      nodeId = selected->nextNodeId;
+    }
+
     if (selected->eventId > 0) {
       triggerEvent(selected->eventId);
     }
-    nodeId = selected->nextNodeId;
   }
 }
 
@@ -452,9 +521,7 @@ ItemFactory& Game::getItemFactory() { return itemFactory; }
 bool Game::isEventCompleted(int eventId) const {
   return completedEvents.count(eventId) > 0;
 }
-
 void Game::completeEvent(int eventId) { completedEvents.insert(eventId); }
-
 std::set<int>& Game::getActiveQuests() { return activeQuests; }
 std::set<int>& Game::getCompletedQuests() { return completedQuests; }
 int Game::getCurrentRoomId() const { return currentRoomId; }

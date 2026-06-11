@@ -9,3 +9,47 @@ roomId;targetRoomId;choiceText
 6;4;Return to the road
 6;5;Enter the village
 5;6;Go back to the gate
+5;7;Go to the old well
+7;5;Back to the village
+7;8;Go to the mill
+8;7;Back to the well
+8;9;Go to the church
+9;8;Back to the mill
+9;10;Go to the smithy
+10;9;Back to the church
+10;11;Go to the tavern
+11;10;Back to the smithy
+11;12;Go to the road to the pier
+12;11;Back to the tavern
+12;19;Go to the pier entrance
+19;12;Back to the road
+19;20;Go to the pier
+20;19;Back to the entrance
+20;21;Go to the passage to the shore
+21;20;Back to the pier
+21;22;Go to the shore
+22;21;Back to the passage
+22;23;Go to the broken boat
+23;22;Back to the shore
+23;25;Go to the sea
+25;23;Back to the boat
+25;26;Go to the boss entrance
+26;25;Back to the sea
+26;27;Go to the sunken cave
+27;26;Back to the entrance
+27;28;Go to the boss fight
+28;27;Back to the cave
+5;13;Go to the east road
+13;5;Back to the village
+13;14;Go to the cliff edge
+14;13;Back to the east road
+14;15;Go to the rocky descent
+15;14;Back to the cliff edge
+15;16;Go to the shoreline
+16;15;Back to the rocky descent
+9;18;Go to the church crypt
+18;9;Back to the church
+11;17;Go to the forgotten crypt
+17;11;Back to the tavern
+22;24;Go to the wrecked schooner
+24;22;Back to the shore

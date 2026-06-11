@@ -14,7 +14,7 @@ class Battle {
   Hero& getHero();
   bool isBattleOver() const;
   int countAliveEnemies() const;
-  void rodAttack();
+  void basicAttack();
   void netAttack();
   void heavyAttack();
   void monstersAttack();
