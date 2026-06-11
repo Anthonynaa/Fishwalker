@@ -8,9 +8,9 @@ id;text;type;value;once
 7;You helped the fisherman with his request.;COMPLETE_QUEST;1;1
 8;A fishwalker jumps out of the well!;SPAWN_MONSTER;1;1
 9;Another fishwalker emerges from the house!;SPAWN_MONSTER;1;1
-100;You pick up the diving boots.;GIVE_ITEM;5;1
-101;You put on the diving suit.;GIVE_ITEM;6;1
-102;You grab the helmet.;GIVE_ITEM;7;1
+100;You pick up the diving boots.;GIVE_ITEM;8;1
+101;You put on the diving suit.;GIVE_ITEM;9;1
+102;You grab the helmet.;GIVE_ITEM;10;1
 103;A fishwalker blocks the path!;SPAWN_MONSTER;1;1
 104;Two fishwalkers ambush you!;SPAWN_MONSTER_DOUBLE;1;1
 105;A guard fishwalker appears at the gate!;SPAWN_MONSTER;1;1

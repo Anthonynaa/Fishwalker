@@ -97,8 +97,7 @@ void Game::startBattle(std::vector<Monster*> monsters) {
   } else {
     std::cout << "\n" << monsters.size() << " enemies appear!\n";
   }
-  std::cout << "\nPress any key to fight...\n";
-  _getch();
+  ConsoleUI::Pause();
 
   while (!battle.isBattleOver()) {
     int actionsLeft = battle.countAliveEnemies();
@@ -158,14 +157,15 @@ void Game::startBattle(std::vector<Monster*> monsters) {
     battle.monstersAttack();
     hero.decrementCooldown();
     hero.applyDot();
-    std::cout << "\nPress any key to continue...";
-    _getch();
+    ConsoleUI::Pause();
   }
 
   if (hero.isAlive())
     std::cout << "\nVictory!\n";
   else
     std::cout << "\nYou died!\n";
+
+  ConsoleUI::Pause();
 
   for (auto* m : monsters) delete m;
 }
@@ -189,6 +189,9 @@ void Game::lookAround() {
 
     if (objects.empty()) {
       std::cout << "\nNothing interesting here.\n";
+
+      ConsoleUI::Pause();
+
       return;
     }
 
@@ -208,9 +211,7 @@ void Game::lookAround() {
     if (object->eventId > 0) {
       triggerEvent(object->eventId);
     }
-    std::cout << "\nPress Enter to continue...";
-    std::cin.ignore(10000, '\n');
-    std::cin.get();
+    ConsoleUI::Pause();
   }
 }
 
@@ -245,8 +246,7 @@ void Game::showCharacter() {
     std::cout << "\n";
   }
 
-  std::cout << "\nPress any key to continue...";
-  _getch();
+  ConsoleUI::Pause();
 }
 
 void Game::showActionsMenu() {
@@ -278,6 +278,9 @@ void Game::moveToRoom() {
 
   if (connections.empty()) {
     std::cout << "\nThere's nowhere to go.\n";
+
+    ConsoleUI::Pause();
+
     return;
   }
 
@@ -306,6 +309,9 @@ void Game::showTalkMenu() {
   auto npcs = GameDatabase_Query::GetNpcsInRoom(database, currentRoomId);
   if (npcs.empty()) {
     std::cout << "\nNobody is here.\n";
+
+    ConsoleUI::Pause();
+
     return;
   }
 

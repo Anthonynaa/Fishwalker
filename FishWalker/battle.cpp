@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "aimminigame.h"
+#include "constants.h"
 
 Battle::Battle(Hero* hero, std::vector<Monster*> enemies)
     : hero(hero), enemies(enemies) {}
@@ -53,9 +54,9 @@ void Battle::rodAttack() {
 
   int armorPieces = hero->getArmorPieces();
   int crosses = 1 + armorPieces;
-  int speedBonus = armorPieces * 33;
+  int speedBonus = armorPieces * SPEED_BONUS_BASE;
   int collected = AimMiniGame::Run(crosses, speedBonus);
-  int damagePercent = 100 + collected * 25;
+  int damagePercent = DAMAGE_PERCENT_BASE + collected * DAMAGE_PERCENT_BONUS;
   hero->setDamagePercent(damagePercent);
   int oldHp = target->getHp();
   hero->attack(*target);
@@ -72,9 +73,9 @@ void Battle::netAttack() {
   if (isBattleOver()) return;
   int armorPieces = hero->getArmorPieces();
   int crosses = 1 + armorPieces;
-  int speedBonus = armorPieces * 33;
+  int speedBonus = armorPieces * SPEED_BONUS_BASE;
   int collected = AimMiniGame::Run(crosses, speedBonus);
-  int damagePercent = 100 + collected * 25;
+  int damagePercent = DAMAGE_PERCENT_BASE + collected * DAMAGE_PERCENT_BONUS;
   hero->setDamagePercent(damagePercent);
   for (auto* m : enemies) {
     if (m->isAlive()) {
@@ -104,9 +105,9 @@ void Battle::heavyAttack() {
 
   int armorPieces = hero->getArmorPieces();
   int crosses = 1 + armorPieces;
-  int speedBonus = armorPieces * 33;
+  int speedBonus = armorPieces * SPEED_BONUS_BASE;
   int collected = AimMiniGame::Run(crosses, speedBonus);
-  int damagePercent = 100 + collected * 25;
+  int damagePercent = DAMAGE_PERCENT_BASE + collected * DAMAGE_PERCENT_BONUS;
   hero->setDamagePercent(damagePercent);
   int oldHp = target->getHp();
   hero->attack(*target);
@@ -117,7 +118,7 @@ void Battle::heavyAttack() {
   if (!target->isAlive()) {
     std::cout << target->getName() << " is defeated!\n";
   }
-  hero->setHeavyCooldown(3);
+  hero->setHeavyCooldown(HEAVY_ATTACK_COOLDOWN);
 }
 
 void Battle::monstersAttack() {

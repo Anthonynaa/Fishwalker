@@ -129,9 +129,6 @@
     <ClCompile Include="CsvParser.cpp">
       <Filter>Исходные файлы\Data</Filter>
     </ClCompile>
-    <ClCompile Include="GameDatabase.cpp">
-      <Filter>Исходные файлы\Database\GameDatabase</Filter>
-    </ClCompile>
     <ClCompile Include="GameDatabase_Load.cpp">
       <Filter>Исходные файлы\Database\GameDatabase</Filter>
     </ClCompile>
@@ -193,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="CsvParser.h">
       <Filter>Исходные файлы\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemData.h">
-      <Filter>Исходные файлы\Database</Filter>
     </ClInclude>
     <ClInclude Include="GameDatabase.h">
       <Filter>Исходные файлы\Database\GameDatabase</Filter>

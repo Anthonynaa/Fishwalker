@@ -1,5 +1,7 @@
 #include "GameDatabase_Load.h"
 
+#include <unordered_map>
+
 #include "CsvParser.h"
 #include "GameDatabase.h"
 
@@ -97,19 +99,18 @@ bool GameDatabase_Load::LoadRoomConnections(GameDatabase& db,
 }
 
 EventType ParseEventType(const std::string& str) {
-  if (str == "GIVE_ITEM") return EventType::GIVE_ITEM;
+  static const std::unordered_map<std::string, EventType> eventTypes = {
+      {"GIVE_ITEM", EventType::GIVE_ITEM},
+      {"SPAWN_MONSTER", EventType::SPAWN_MONSTER},
+      {"ADD_QUEST", EventType::ADD_QUEST},
+      {"COMPLETE_QUEST", EventType::COMPLETE_QUEST},
+      {"UNLOCK_NPC", EventType::UNLOCK_NPC},
+      {"OPEN_SHOP", EventType::OPEN_SHOP},
+      {"SPAWN_MONSTER_GROUP", EventType::SPAWN_MONSTER_GROUP}};
 
-  if (str == "SPAWN_MONSTER") return EventType::SPAWN_MONSTER;
+  auto it = eventTypes.find(str);
 
-  if (str == "ADD_QUEST") return EventType::ADD_QUEST;
-
-  if (str == "COMPLETE_QUEST") return EventType::COMPLETE_QUEST;
-
-  if (str == "UNLOCK_NPC") return EventType::UNLOCK_NPC;
-
-  if (str == "OPEN_SHOP") return EventType::OPEN_SHOP;
-
-  if (str == "SPAWN_MONSTER_GROUP") return EventType::SPAWN_MONSTER_GROUP;
+  if (it != eventTypes.end()) return it->second;
 
   return EventType::NONE;
 }

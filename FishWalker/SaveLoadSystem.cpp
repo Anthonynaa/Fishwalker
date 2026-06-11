@@ -5,6 +5,7 @@
 #include <string>
 
 #include "GameDatabase_Query.h"
+#include "constants.h"
 #include "game.h"
 
 bool SaveLoadSystem::SaveGame(Game& game, const std::string& filename) {
@@ -105,7 +106,7 @@ bool SaveLoadSystem::LoadGame(Game& game, const std::string& filename) {
       file >> pieces;
       for (int i = 0; i < pieces; ++i) game.getHero().addArmorPiece();
     } else if (token == "WEAPON_SLOTS") {
-      for (int i = 0; i < 3; ++i) {
+      for (int i = 0; i < WEAPON_SLOTS; ++i) {
         int slot;
         std::string status;
         file >> slot >> status;
@@ -120,7 +121,7 @@ bool SaveLoadSystem::LoadGame(Game& game, const std::string& filename) {
       }
       file >> token;
     } else if (token == "ARMOR_SLOTS") {
-      for (int i = 0; i < 3; ++i) {
+      for (int i = 0; i < ARMOR_SLOTS; ++i) {
         int slot;
         std::string status;
         file >> slot >> status;

@@ -146,7 +146,6 @@
     <ClCompile Include="ConsoleUI.cpp" />
     <ClCompile Include="CsvParser.cpp" />
     <ClCompile Include="EventSystem.cpp" />
-    <ClCompile Include="GameDatabase.cpp" />
     <ClCompile Include="GameDatabase_Load.cpp" />
     <ClCompile Include="infectedMonster.cpp" />
     <ClCompile Include="itemFactory.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="GameDatabase_Load.h" />
     <ClInclude Include="GameDatabase_Query.h" />
     <ClInclude Include="infectedMonster.h" />
-    <ClInclude Include="ItemData.h" />
     <ClInclude Include="itemFactory.h" />
     <ClInclude Include="monsterFactory.h" />
     <ClInclude Include="NpcDatabase.h" />

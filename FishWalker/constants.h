@@ -23,4 +23,11 @@ constexpr int INFECTED_MONSTER_INF = 0;
 constexpr int STANDARD_MULTIPLIER = 1;
 constexpr int BOOSTED_MULTIPLIER = 2;
 
+constexpr int SPEED_BONUS_BASE = 33;
+constexpr int DAMAGE_PERCENT_BASE = 100;
+constexpr int DAMAGE_PERCENT_BONUS = 25;
+constexpr int HEAVY_ATTACK_COOLDOWN = 3;
+constexpr int WEAPON_SLOTS = 3;
+constexpr int ARMOR_SLOTS = 3;
+
 #endif

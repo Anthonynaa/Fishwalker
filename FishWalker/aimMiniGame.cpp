@@ -9,9 +9,12 @@
 #include <iostream>
 #include <vector>
 
+#include "ConsoleUI.h"
+#include "constants.h"
+
 const int CELL_SIZE = 3;
 const int MAX_CYCLES = 5;
-const int BASE_MOVE_INTERVAL_MS = 150;
+const int BASE_MOVE_INTERVAL_MS = 100;
 const int LOOP_DELAY_MS = 20;
 
 const char NORMAL_CHAR = '#';
@@ -141,10 +144,10 @@ int AimMiniGame::Run(int crossesCount, int speedBonusPercent) {
   ShowConsoleCursor(false);
   drawGrid(currentPos, isTargetCell, cellsCount, screenWidth);
 
-  int nextMoveTime = GetTickCount() + moveInterval;
+  int nextMoveTime = GetTickCount64() + moveInterval;
 
   while (true) {
-    int now = GetTickCount();
+    int now = GetTickCount64();
     if (now >= nextMoveTime) {
       currentPos = (currentPos + 1) % cellsCount;
       stepCount++;
@@ -153,14 +156,14 @@ int AimMiniGame::Run(int crossesCount, int speedBonusPercent) {
     }
 
     if (_kbhit()) {
-      _getch();
+      ConsoleUI::Pause();
       if (isTargetCell[currentPos]) {
         isTargetCell[currentPos] = false;
         collected++;
         drawGrid(currentPos, isTargetCell, cellsCount, screenWidth);
         if (collected >= crossesCount) break;
       } else {
-        break;  // промах Ц игра заканчиваетс€
+        break;
       }
     }
 
@@ -172,8 +175,8 @@ int AimMiniGame::Run(int crossesCount, int speedBonusPercent) {
   gotoxy(0, 12);
   if (collected > 0) {
     std::cout << "                             \n";
-    std::cout << "   " << collected
-              << " cross(es) collected! Bonus: " << collected * 25 << "%\n";
+    std::cout << "   " << collected << " cross(es) collected! Bonus: "
+              << collected * DAMAGE_PERCENT_BONUS << "%\n";
     std::cout << "                             \n";
   } else {
     std::cout << "                             \n";
