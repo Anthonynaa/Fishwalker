@@ -6,3 +6,15 @@ id;npcId;text
 5;1;I heard some noises coming from the sunken ship. Can ya check it for me?
 6;3;Using diving equipment enhances your super attack. Each piece you find increases the number of crosses and the speed of the aiming game. Find all three!
 7;3;Good luck, young fisherman.
+8;4;The fishwalkers are terrorizing us. If you kill 10 of them, I will reward you.
+9;4;You have killed K monsters. Come back when you reach 10.
+10;4;Thank you! Here is your reward.
+11;1;I need a Herbal Decoction. Can you bring me one?
+12;1;Thank you! Here is your reward.
+13;1;You don't have a Herbal Decoction. Find one and come back.
+14;5;I feel terrible... Please, I need an antidote.
+15;5;Thank you! You saved my life. Take this.
+16;5;I don't have an antidote... I'm doomed.
+17;6;Help me! I've seen monsters. Kill 15 of them and I'll reward you.
+18;6;You did it! Here's a helmet.
+19;6;You've killed some monsters. Need 15.

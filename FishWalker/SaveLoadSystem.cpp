@@ -1,6 +1,7 @@
 #include "SaveLoadSystem.h"
 
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -12,24 +13,16 @@ bool SaveLoadSystem::SaveGame(Game& game, const std::string& filename) {
   std::ofstream file(filename);
   if (!file) return false;
 
-  file << "ROOM\n";
-  file << game.getCurrentRoomId() << "\n";
-
-  file << "HP\n";
-  file << game.getHero().getHp() << "\n";
-
-  file << "INF\n";
-  file << game.getHero().getInf() << "\n";
-
-  file << "ARMOR_PIECES\n";
-  file << game.getHero().getArmorPieces() << "\n";
+  file << "ROOM\n" << game.getCurrentRoomId() << "\n";
+  file << "HP\n" << game.getHero().getHp() << "\n";
+  file << "INF\n" << game.getHero().getInf() << "\n";
+  file << "ARMOR_PIECES\n" << game.getHero().getArmorPieces() << "\n";
 
   file << "WEAPON_SLOTS\n";
-  for (int i = 0; i < 3; ++i) {
+  for (int i = 0; i < WEAPON_SLOTS; ++i) {
     Weapon* w = game.getHero().getWeaponInSlot(i);
     if (w) {
-      file << i << " " << w->getWeaponName() << " " << w->getWeaponAtk() << " "
-           << w->getWeaponSubType() << " " << w->getItemId() << "\n";
+      file << i << " " << w->getItemId() << "\n";
     } else {
       file << i << " empty\n";
     }
@@ -37,46 +30,39 @@ bool SaveLoadSystem::SaveGame(Game& game, const std::string& filename) {
   file << "END_WEAPON_SLOTS\n";
 
   file << "ARMOR_SLOTS\n";
-  for (int i = 0; i < 3; ++i) {
+  for (int i = 0; i < ARMOR_SLOTS; ++i) {
     Armor* a = game.getHero().getArmorInSlot(i);
     if (a) {
-      file << i << " " << a->getArmorName() << " " << a->getArmorDef() << " "
-           << a->getItemId() << "\n";
+      file << i << " " << a->getItemId() << "\n";
     } else {
       file << i << " empty\n";
     }
   }
   file << "END_ARMOR_SLOTS\n";
 
+  file << "HEAVY_COOLDOWN\n";
+  file << game.getHero().getHeavyCooldown() << "\n";
+
   file << "EVENTS\n";
-  for (int id : game.getCompletedEvents()) {
-    file << id << "\n";
-  }
+  for (int id : game.getCompletedEvents()) file << id << "\n";
   file << "END_EVENTS\n";
 
   file << "INVENTORY\n";
-  const auto& items = game.getHero().getInventory().getItems();
-  for (const auto& item : items) {
+  for (const auto& item : game.getHero().getInventory().getItems())
     file << item.getId() << "\n";
-  }
   file << "END_INVENTORY\n";
 
   file << "ACTIVE_QUESTS\n";
-  for (int id : game.getActiveQuests()) {
-    file << id << "\n";
-  }
+  for (int id : game.getActiveQuests()) file << id << "\n";
   file << "END_ACTIVE_QUESTS\n";
 
   file << "COMPLETED_QUESTS\n";
-  for (int id : game.getCompletedQuests()) {
-    file << id << "\n";
-  }
+  for (int id : game.getCompletedQuests()) file << id << "\n";
   file << "END_COMPLETED_QUESTS\n";
 
   file << "NPCS\n";
-  for (const auto& npc : game.getDatabase().npcs) {
+  for (const auto& npc : game.getDatabase().npcs)
     file << npc.id << " " << npc.enabled << "\n";
-  }
   file << "END_NPCS\n";
 
   return true;
@@ -87,7 +73,6 @@ bool SaveLoadSystem::LoadGame(Game& game, const std::string& filename) {
   if (!file) return false;
 
   std::string token;
-
   while (file >> token) {
     if (token == "ROOM") {
       int roomId;
@@ -110,13 +95,14 @@ bool SaveLoadSystem::LoadGame(Game& game, const std::string& filename) {
         int slot;
         std::string status;
         file >> slot >> status;
-        if (status == "empty") {
-        } else {
-          std::string name;
-          int atk, subType, itemId;
-          file >> name >> atk >> subType >> itemId;
-          Weapon* w = new Weapon(name, atk, 1, subType, itemId);
-          game.getHero().equipWeapon(w, slot);
+        if (status != "empty") {
+          int itemId = std::stoi(status);
+          const ItemRecord* rec =
+              GameDatabase_Query::FindItemById(game.getDatabase(), itemId);
+          if (rec) {
+            Weapon* w = game.getItemFactory().createWeapon(*rec);
+            game.getHero().equipWeapon(w, slot);
+          }
         }
       }
       file >> token;
@@ -125,16 +111,21 @@ bool SaveLoadSystem::LoadGame(Game& game, const std::string& filename) {
         int slot;
         std::string status;
         file >> slot >> status;
-        if (status == "empty") {
-        } else {
-          std::string name;
-          int def, itemId;
-          file >> name >> def >> itemId;
-          Armor* a = new Armor(name, def, 0, itemId);
-          game.getHero().equipArmor(a, slot);
+        if (status != "empty") {
+          int itemId = std::stoi(status);
+          const ItemRecord* rec =
+              GameDatabase_Query::FindItemById(game.getDatabase(), itemId);
+          if (rec) {
+            Armor* a = game.getItemFactory().createArmor(*rec);
+            game.getHero().equipArmor(a, slot);
+          }
         }
       }
       file >> token;
+    } else if (token == "HEAVY_COOLDOWN") {
+      int cd;
+      file >> cd;
+      game.getHero().setHeavyCooldown(cd);
     } else if (token == "EVENTS") {
       game.getCompletedEvents().clear();
       int id;
@@ -179,9 +170,7 @@ bool SaveLoadSystem::LoadGame(Game& game, const std::string& filename) {
         file >> enabled;
         NpcRecord* npc =
             GameDatabase_Query::FindNpcById(game.getDatabase(), npcId);
-        if (npc) {
-          npc->enabled = enabled;
-        }
+        if (npc) npc->enabled = enabled;
       }
     }
   }

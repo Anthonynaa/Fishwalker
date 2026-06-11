@@ -1,13 +1,15 @@
-id;name;type;value;subType;slot
-1;Health Potion;0;20;0;0
-2;Antidote;3;50;0;0
-3;Leather Armor;2;5;0;1
-4;Knife;1;15;0;0
-5;Broken Rod;1;5;0;0
-6;Normal Rod;1;10;0;0
-7;Infected Rod;1;15;0;0
-8;Diving Boots;2;10;0;2
-9;Diving Suit;2;30;0;1
-10;Diving Helmet;2;50;0;0
-11;Fishing Net;1;7;1;1
-12;Harpoon;1;25;2;2
+id;name;type;value;subType;slot;critChance;specialType;specialValue
+1;Broken Rod;1;5;0;0;0;0;0
+2;Normal Rod;1;10;0;0;10;0;0
+3;Rotten Rod;1;10;0;0;15;0;0
+4;Infected Rod;1;15;0;0;25;0;0
+5;Trap Net;1;5;1;1;0;4;10
+6;Pot Net;1;5;1;1;0;5;50
+7;Ahan Net;1;7;1;1;0;6;100
+8;Spear;1;20;2;2;0;0;0
+9;Harpoon;1;25;2;2;0;0;0
+10;Diving Boots;2;10;0;2;0;0;0
+11;Diving Suit;2;30;0;1;0;0;0
+12;Diving Helmet;2;50;0;0;0;0;0
+13;Herbal Decoction;0;20;0;0;0;0;0
+14;Antidote;3;50;0;0;0;0;0

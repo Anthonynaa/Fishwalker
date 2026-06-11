@@ -7,3 +7,13 @@ id;nodeId;text;nextNodeId;eventId;requiredEventId;forbiddenEventId
 6;1;Do you need any help?;5;0;0;6
 7;5;I'll see what I can do.;1;6;0;0
 8;6;Thank you for the advice.;7;0;0;0
+9;8;I accept the challenge.;9;0;0;0
+10;8;Not interested.;0;0;0;0
+11;9;I'll keep fighting.;0;0;0;0
+12;9;I want my reward now.;10;0;0;0
+13;11;I have a Herbal Decoction.;12;0;0;0
+14;11;Not yet.;13;0;0;0
+15;14;I have an antidote.;15;0;0;0
+16;14;I don't have one.;16;0;0;0
+17;17;I accept the quest.;18;0;0;0
+18;17;Not now.;0;0;0;0

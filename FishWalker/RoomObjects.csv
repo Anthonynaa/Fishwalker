@@ -1,17 +1,35 @@
 id;roomId;name;description;eventId
-1;3;Barrel;An old wooden barrel.;2
-2;3;Fishing Net;A torn fishing net.;1
-3;3;Boat;A small fishing boat.;0
-4;4;Corpse;Something looks wrong with this body.;3
-5;5;Well;An old stone well. Something stirs inside.;8
-6;5;Abandoned House;A dark doorway. You hear a growl.;9
-100;4;Diving Boots;A pair of reinforced rubber boots. +1 armor piece.;100
-101;4;Diving Suit;A thick protective suit. +1 armor piece.;101
-102;4;Diving Helmet;A sturdy helmet with a glass visor. +1 armor piece.;102
-200;1;Signpost;A wooden signpost points toward the village. It says "Hut 2 km".;0
-201;1;Trodden Path;A well-worn path leading deeper into the woods. You hear nothing special.;0
-300;6;Old Sign;The sign reads: "Village ahead. Beware of fishwalkers.";0
-500;1;Broken Rod;A broken fishing rod.;200
-501;1;Normal Rod;A regular fishing rod.;201
-502;1;Fishing Net;A net for splash attacks.;202
-503;1;Harpoon;A heavy harpoon (3 turns cooldown).;203
+1;1;Signpost;A wooden signpost points toward the village. It says "Hut 2 km".;0
+2;1;Trodden Path;A well-worn path leading deeper into the woods.;0
+100;2;Old First Aid Kit;A dusty box with medical supplies.;300
+101;2;Tool Table;A table with various fishing tools.;301
+102;4;Fallen Tree;A large tree blocks the path.;302
+103;5;Well;An old stone well. Something stirs inside.;303
+104;6;Bench;A wooden bench.;305
+105;7;Bucket;An old bucket.;306
+106;7;Shadow in the Well;A dark shape moves below.;307
+107;9;Candles;Wax candles flicker.;308
+108;9;Statue;A stone statue of a diver.;309
+109;10;Anvil;A massive anvil with rust stains.;300
+110;11;Bar Counter;A bar counter.;300
+111;11;Cellar;A cellar door.;301
+112;12;Lamp Post;A tall lamp post.;310
+113;12;Broken Cart;A broken cart.;311
+114;14;Dangerous Slope;A steep slope, easy to fall.;312
+115;15;Rock Fragments;Sharp rock pieces.;313
+116;15;Nest;A bird's nest made of seaweed.;314
+117;16;Seashells;Seashells washed ashore.;406
+118;17;Sarcophagus;An ancient tomb.;400
+119;18;Altar;A stone altar.;401
+120;19;Rope;A thick rope.;318
+121;19;Crate;A wooden crate.;319
+122;21;Sand;Wet sand.;320
+123;21;Washed-up Net;A torn fishing net.;321
+124;22;Palm Tree;A tall palm tree.;322
+125;22;Sunken Chest;A chest half-buried in sand.;323
+126;23;Captain's Chest;An ornate chest.;324
+127;24;Ruined Chest;A ruined chest.;410
+128;25;Waves;Crashing waves.;326
+129;25;Floating Debris;Trash floating in water.;327
+130;27;Chest;A chest.;328
+131;28;Treasure;A pile of gold.;329

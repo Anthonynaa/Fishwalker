@@ -78,7 +78,6 @@ bool Hero::isArmorSlotEmpty(int slot) const {
 }
 
 void Hero::applyDot() {
-  decrementCooldown();
   if (getInf() >= 80) {
     int damage = (baseMaxHp / 100);
     if (damage < 1) damage = 1;
