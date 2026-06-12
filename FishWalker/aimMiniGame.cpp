@@ -11,21 +11,6 @@
 
 #include "constants.h"
 
-const int CELL_SIZE = 3;
-const int FIXED_CELLS_COUNT = 16;
-const int MAX_CYCLES = 5;
-const int BASE_MOVE_INTERVAL_MS = 100;
-const int LOOP_DELAY_MS = 20;
-
-const char NORMAL_CHAR = '#';
-const char TARGET_CROSS = '+';
-const char TARGET_BG = '.';
-const char FRAME_TOP = '-';
-const char FRAME_BOTTOM = '-';
-const char FRAME_LEFT = '|';
-const char FRAME_RIGHT = '|';
-const char FRAME_CORNER = '+';
-
 static void gotoxy(int x, int y) {
   COORD coord;
   coord.X = (SHORT)x;
