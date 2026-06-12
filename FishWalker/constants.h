@@ -30,4 +30,19 @@ constexpr int HEAVY_ATTACK_COOLDOWN = 3;
 constexpr int WEAPON_SLOTS = 3;
 constexpr int ARMOR_SLOTS = 3;
 
+constexpr int CELL_SIZE = 3;
+constexpr int FIXED_CELLS_COUNT = 16;
+constexpr int MAX_CYCLES = 5;
+constexpr int BASE_MOVE_INTERVAL_MS = 100;
+constexpr int LOOP_DELAY_MS = 20;
+
+const char NORMAL_CHAR = '#';
+const char TARGET_CROSS = '+';
+const char TARGET_BG = '.';
+const char FRAME_TOP = '-';
+const char FRAME_BOTTOM = '-';
+const char FRAME_LEFT = '|';
+const char FRAME_RIGHT = '|';
+const char FRAME_CORNER = '+';
+
 #endif
